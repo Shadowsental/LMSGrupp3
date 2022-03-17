@@ -4,6 +4,7 @@ using LMSGrupp3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMSGrupp3.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220317103214_seedThings")]
+    partial class seedThings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,7 +198,6 @@ namespace LMSGrupp3.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -261,72 +262,67 @@ namespace LMSGrupp3.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7eeb7e2a-9b25-4cd3-b78e-47f3a4947b85",
+                            Id = "06991b31-739b-4a8e-a284-f2c90aacbbca",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7c549b41-2880-48a2-be63-048e01869c90",
-                            Email = "Adelle.Ebert@yahoo.com",
+                            ConcurrencyStamp = "3895e7fe-b7ef-490a-87df-6420b397a7e6",
                             EmailConfirmed = false,
-                            FirstName = "Brianne",
-                            LastName = "Collins",
+                            FirstName = "Jodie",
+                            LastName = "Heaney",
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4d34f54a-275f-4b0b-87e8-7206cd85bf8c",
+                            SecurityStamp = "ac4c9d5e-0612-48dd-85db-848fbcc88a3d",
                             TwoFactorEnabled = false
                         },
                         new
                         {
-                            Id = "5888db30-a2ec-42bc-b9b5-9d5586fab98d",
+                            Id = "7efcfbfa-4d50-4011-a2bf-c7dc49a968d4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ba08a488-597a-4a11-b682-bbfa6b0fa505",
-                            Email = "Ned_Towne@gmail.com",
+                            ConcurrencyStamp = "0dbf1e33-c21f-421c-80a2-a454e46c50c3",
                             EmailConfirmed = false,
-                            FirstName = "Moshe",
-                            LastName = "Smitham",
+                            FirstName = "Nestor",
+                            LastName = "Ruecker",
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e9435773-00d0-458c-9d99-3dea0b12a6b4",
+                            SecurityStamp = "c73043c0-dcee-4cde-8723-642fd6a20f0b",
                             TwoFactorEnabled = false
                         },
                         new
                         {
-                            Id = "633afb46-0fed-4602-bb6a-87099b7c1e51",
+                            Id = "a0e68646-e579-47f0-afa1-05ea5774ae7b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8dbabab6-4b03-45ff-8a78-5ded6c803710",
-                            Email = "Rene41@hotmail.com",
+                            ConcurrencyStamp = "11251477-a197-4c3c-bbaa-cc56c9930f98",
                             EmailConfirmed = false,
-                            FirstName = "Faye",
-                            LastName = "Grady",
+                            FirstName = "Kendall",
+                            LastName = "Gottlieb",
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e54cf98b-63f5-467e-8cfe-a015d476d2a9",
+                            SecurityStamp = "722d364d-1c72-4009-8f7a-72e06b5b46f9",
                             TwoFactorEnabled = false
                         },
                         new
                         {
-                            Id = "4514d949-3f63-40fa-a592-41526ea21b8f",
+                            Id = "716839c0-9d9f-47ec-b553-46c5ae2575c4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "df678bd8-60c2-42b9-8789-f7e83b5a7ba2",
-                            Email = "Theo.Spencer@yahoo.com",
+                            ConcurrencyStamp = "75775c43-242f-46d5-9d1d-b683000f756a",
                             EmailConfirmed = false,
-                            FirstName = "Berneice",
-                            LastName = "Jones",
+                            FirstName = "Gracie",
+                            LastName = "Yost",
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "403bb734-d780-46fe-bed4-6ae0063e3c73",
+                            SecurityStamp = "0a591c5e-81dd-4601-af3a-470dc3f3e112",
                             TwoFactorEnabled = false
                         },
                         new
                         {
-                            Id = "cbf15935-c367-436e-8ad5-11c89aeba4e5",
+                            Id = "cf412391-660f-47c5-9fcd-c5333b136079",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cadd7f32-d865-4169-8e0b-261bc86f0dee",
-                            Email = "Mark.Thiel@hotmail.com",
+                            ConcurrencyStamp = "b368eb00-cbd4-4de6-bdc9-66e002671ce1",
                             EmailConfirmed = false,
-                            FirstName = "Earlene",
-                            LastName = "Bartell",
+                            FirstName = "Harley",
+                            LastName = "Russel",
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3bf64473-d1b5-48d9-88c6-571f63e4b699",
+                            SecurityStamp = "da417ecc-e3d3-4ded-98e5-35e068b37d8e",
                             TwoFactorEnabled = false
                         });
                 });
