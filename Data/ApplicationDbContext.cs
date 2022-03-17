@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Bogus;
 
 namespace LMSGrupp3.Data
 {
@@ -9,5 +10,7 @@ namespace LMSGrupp3.Data
             : base(options)
         {
         }
+
+        public DbSet<LMSGrupp3.Models.Entities.User> Users { get; set; }
     }
 }
