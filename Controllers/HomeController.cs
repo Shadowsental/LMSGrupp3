@@ -1,16 +1,24 @@
-﻿using LMSGrupp3.Models;
+﻿using LMSGrupp3.Data;
+using LMSGrupp3.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Bogus;
+using Microsoft.AspNetCore.Identity;
+using LMSGrupp3.Models.Entities;
 
 namespace LMSGrupp3.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext db;
+        private readonly Faker faker;
+        private readonly UserManager<User> userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext db, UserManager<User> userManager)
         {
-            _logger = logger;
+            this.db = db;
+            this.userManager = userManager;
         }
 
         public IActionResult Index()
@@ -26,7 +34,7 @@ namespace LMSGrupp3.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
