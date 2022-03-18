@@ -4,6 +4,7 @@ using LMSGrupp3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMSGrupp3.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220317132526_emailFix")]
+    partial class emailFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +58,7 @@ namespace LMSGrupp3.Data.Migrations
 
                     b.HasIndex("ModuleId");
 
-                    b.ToTable("Activities", (string)null);
+                    b.ToTable("Activity");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.ActivityType", b =>
@@ -73,7 +75,7 @@ namespace LMSGrupp3.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ActivityType", (string)null);
+                    b.ToTable("ActivityType");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Course", b =>
@@ -97,7 +99,7 @@ namespace LMSGrupp3.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Document", b =>
@@ -145,7 +147,7 @@ namespace LMSGrupp3.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Document", (string)null);
+                    b.ToTable("Document");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Module", b =>
@@ -177,7 +179,7 @@ namespace LMSGrupp3.Data.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Module", (string)null);
+                    b.ToTable("Module");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.User", b =>
@@ -257,6 +259,78 @@ namespace LMSGrupp3.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "c47d3d54-3ee9-4409-a80f-45bd38157f6c",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c1685684-fabf-4257-a0c4-5e9a7a7af16b",
+                            Email = "Deangelo37@hotmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Wava",
+                            LastName = "Treutel",
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c0ac9b9b-a2cf-4173-8778-9ea225eeef0f",
+                            TwoFactorEnabled = false
+                        },
+                        new
+                        {
+                            Id = "28bb29aa-f9df-435e-9453-4b2414b05e9a",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "85d77c50-0777-45b5-8256-d2f3959665ba",
+                            Email = "Myriam_Kohler@gmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Barrett",
+                            LastName = "Farrell",
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "28f5bf84-2b95-4ad6-9b50-3481efecb5cd",
+                            TwoFactorEnabled = false
+                        },
+                        new
+                        {
+                            Id = "9307c606-af01-472a-9de9-fa101e4dc966",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7bf8c9be-7c52-4ea0-bc2c-297c79bb6184",
+                            Email = "Benton_Lemke@yahoo.com",
+                            EmailConfirmed = false,
+                            FirstName = "Laila",
+                            LastName = "Volkman",
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "efe31303-da56-48c7-9f37-3437baf958fe",
+                            TwoFactorEnabled = false
+                        },
+                        new
+                        {
+                            Id = "d3ccd8b7-982f-4c4c-8716-a60e0d73c802",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c2d0a905-1031-4f60-baa1-a11c902c7038",
+                            Email = "Talon.Miller93@yahoo.com",
+                            EmailConfirmed = false,
+                            FirstName = "Friedrich",
+                            LastName = "Rutherford",
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "61f60b7f-0403-4be7-aa51-c1fbfb9d04fc",
+                            TwoFactorEnabled = false
+                        },
+                        new
+                        {
+                            Id = "50b40697-5960-4fbe-865f-cd4c69682d0f",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7b099e77-959c-43ae-b39a-4bca90c7c178",
+                            Email = "Johnathan24@hotmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Benedict",
+                            LastName = "Bernier",
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "17fa1a6f-2558-4338-b09a-42a4e72de53b",
+                            TwoFactorEnabled = false
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

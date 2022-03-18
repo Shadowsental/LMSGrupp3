@@ -10,7 +10,10 @@ namespace LMSGrupp3.Models.Entities
 {
 	public string FirstName { get; set; }
 	public string LastName { get; set; }
+
+	//public string Email { get; set; }
 	public string FullName => $"{FirstName} {LastName}";
+
 
 	//NavProp
 	public Course Course { get; set; }
