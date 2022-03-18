@@ -5,6 +5,8 @@ using System.Diagnostics;
 using Bogus;
 using Microsoft.AspNetCore.Identity;
 using LMSGrupp3.Models.Entities;
+using LMSGrupp3.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace LMSGrupp3.Controllers
 {
@@ -21,9 +23,10 @@ namespace LMSGrupp3.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = db.Users;
+            return View(await model.ToListAsync());
         }
 
         public IActionResult Privacy()
