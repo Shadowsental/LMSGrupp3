@@ -1,8 +1,8 @@
 using LMSGrupp3.Data;
 using LMSGrupp3.Models.Entities;
-using LMSGrupp3.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using LMSGrupp3.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +18,8 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+app.SeedDataAsync().GetAwaiter().GetResult();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
