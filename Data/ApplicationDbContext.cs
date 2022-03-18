@@ -8,13 +8,12 @@ namespace LMSGrupp3.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string>
     {
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Activity> Activities { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-
-        public DbSet<LMSGrupp3.Models.Entities.User> Users { get; set; }
-        public DbSet<LMSGrupp3.Models.Entities.Course> Courses { get; set; }
-        public DbSet<LMSGrupp3.Models.Entities.Activity> Activities { get; set; }
     }
 }

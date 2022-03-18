@@ -56,7 +56,7 @@ namespace LMSGrupp3.Data.Migrations
 
                     b.HasIndex("ModuleId");
 
-                    b.ToTable("Activities");
+                    b.ToTable("Activities", (string)null);
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.ActivityType", b =>
@@ -73,7 +73,7 @@ namespace LMSGrupp3.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ActivityType");
+                    b.ToTable("ActivityType", (string)null);
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Course", b =>
@@ -97,7 +97,7 @@ namespace LMSGrupp3.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Document", b =>
@@ -145,7 +145,7 @@ namespace LMSGrupp3.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Document");
+                    b.ToTable("Document", (string)null);
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Module", b =>
@@ -177,7 +177,7 @@ namespace LMSGrupp3.Data.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Module");
+                    b.ToTable("Module", (string)null);
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.User", b =>

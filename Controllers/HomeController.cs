@@ -25,8 +25,8 @@ namespace LMSGrupp3.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = db.Users;
-            return View(await model.ToListAsync());
+            var model = db.Users.Select(u => new { u.FirstName, u.LastName, u.Course}).ToList();
+            return View(await db.Users.ToListAsync());
         }
 
         public IActionResult Privacy()

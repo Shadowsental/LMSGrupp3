@@ -1,5 +1,5 @@
-﻿@using LMSGrupp3.Models.ViewModels;
-@model UserDisplayViewModel
+﻿@using LMSGrupp3.Models.Entities;
+@model IEnumerable<User>
 
 @{
     ViewData["Title"] = "Index";
@@ -29,4 +29,22 @@
             <th></th>
         </tr>
     </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+             <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+        </tr>
+}
+    </tbody>
 </table>

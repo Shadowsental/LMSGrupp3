@@ -1,36 +1,67 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using LMSGrupp3.Models.Entities;
 using Bogus;
+using Microsoft.AspNetCore.Identity;
 
 namespace LMSGrupp3.Data
 {
-    public class SeedData
+    public static class SeedData
     {
         private static Faker faker = new Faker();
+        private static IEnumerable<Course> courses;
+        private static UserManager<User> userManager;
+        private static RoleManager<IdentityRole> roleManager;
 
-        public static async Task InitAsync(ApplicationDbContext db)
+        public static async Task InitAsync(ApplicationDbContext db, Microsoft.AspNetCore.Identity.UserManager<User> usermanager, RoleManager<IdentityRole> rolemanager)
         {
-            var students = GetStudents();
-            await db.AddRangeAsync(students);
+
+            if (await db.Users.AnyAsync()) return; 
+
+             userManager = usermanager;
+            roleManager = rolemanager;
+
+          
+            courses = GetCourses();
+            await db.AddRangeAsync(courses);
+
+            await GetStudents();
+            //await db.AddRangeAsync(students);
+
+
+            //var activities = GetActivities();
+            //await db.AddRangeAsync(activities);
+
+            await db.SaveChangesAsync();
         }
 
 
         //Students
-        private static IEnumerable<User> GetStudents()
+        private static async Task GetStudents()
         {
-            var students = new List<User>();
-
+                await CreateRole("Student");
             for (int i = 0; i < 10; i++)
             {
+
+                var firstname = faker.Name.FirstName();
+                var lastname = faker.Name.LastName();
+                var email = faker.Internet.Email($"{firstname} {lastname}");
                 User student = new User()
                 {
-                    FirstName = faker.Name.FirstName(),
-                    LastName = faker.Name.LastName()
+                    FirstName =  firstname,
+                    LastName = lastname,
+                    UserName = email,
+                    Email = email
+                    
                 };
 
-                students.Add(student);
+                await userManager.CreateAsync(student, "Bytmig53!");
+                await userManager.AddToRoleAsync(student, "Student");
             }
-            return students;
+        }
+
+        private static async Task CreateRole(string roleName)
+        {
+            var res = await roleManager.CreateAsync(new IdentityRole { Name = roleName });
         }
 
 
@@ -62,7 +93,8 @@ namespace LMSGrupp3.Data
                 Course course = new Course()
                 {
                     CourseName = faker.Commerce.ProductName(),
-                    Description = faker.Commerce.ProductDescription()
+                    Description = faker.Commerce.ProductDescription(),
+                    StartDate = DateTime.Now
                 };
                 courses.Add(course);
             }

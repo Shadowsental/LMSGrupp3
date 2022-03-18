@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMSGrupp3.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220318083017_seedingData2")]
-    partial class seedingData2
+    [Migration("20220318133622_testMigration")]
+    partial class testMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

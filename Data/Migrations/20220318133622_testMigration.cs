@@ -4,7 +4,7 @@
 
 namespace LMSGrupp3.Data.Migrations
 {
-    public partial class seedAsync : Migration
+    public partial class testMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
