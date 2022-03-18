@@ -4,6 +4,7 @@ using LMSGrupp3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMSGrupp3.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220317130936_errorFix2")]
+    partial class errorFix2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +58,7 @@ namespace LMSGrupp3.Data.Migrations
 
                     b.HasIndex("ModuleId");
 
-                    b.ToTable("Activities");
+                    b.ToTable("Activity");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.ActivityType", b =>
@@ -97,7 +99,7 @@ namespace LMSGrupp3.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Document", b =>
@@ -257,6 +259,78 @@ namespace LMSGrupp3.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "09e703d0-94b0-4c45-bd72-5d84677493e6",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "2388b947-5139-4e53-bc03-cbc9e81aab3f",
+                            Email = "Theresa.Kerluke27@gmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Ashly",
+                            LastName = "Gerlach",
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "603c9e23-ce29-4b30-926d-487d61de6da0",
+                            TwoFactorEnabled = false
+                        },
+                        new
+                        {
+                            Id = "a4db891e-6640-4af4-9dfd-fe3bd0da30ab",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "692f83b4-6316-45e6-b8ee-a70a1baa446b",
+                            Email = "Clementine_Wilkinson@hotmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Jamar",
+                            LastName = "Maggio",
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f1370eee-3cb6-46a3-b3e1-7d8a6cd3d284",
+                            TwoFactorEnabled = false
+                        },
+                        new
+                        {
+                            Id = "66dd9791-ab41-425b-b172-7a4b8d240179",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "82c05246-2bbf-4e0c-94f5-6f00abb9906b",
+                            Email = "Emmanuelle_Abshire63@hotmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Triston",
+                            LastName = "Heathcote",
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e46fab45-d5f8-4909-878e-d5bc063d9d97",
+                            TwoFactorEnabled = false
+                        },
+                        new
+                        {
+                            Id = "cfa2691f-c011-47f1-9d9d-ccd57665cd99",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "bc16cce3-05a2-4cf9-958c-7ac00cb114bc",
+                            Email = "Jace50@yahoo.com",
+                            EmailConfirmed = false,
+                            FirstName = "Shane",
+                            LastName = "Nader",
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "3b632327-299a-4762-a36f-ed006e9e5935",
+                            TwoFactorEnabled = false
+                        },
+                        new
+                        {
+                            Id = "a8f1ed86-3ed3-4c01-a57b-53e3075054af",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c11d86eb-80fa-4f9c-8bde-1d14459e5ca3",
+                            Email = "Rosalee.Weissnat@yahoo.com",
+                            EmailConfirmed = false,
+                            FirstName = "Dora",
+                            LastName = "Grant",
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "50f66b6b-8774-486f-a432-deccbcef8388",
+                            TwoFactorEnabled = false
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
