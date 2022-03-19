@@ -17,7 +17,7 @@ namespace LMSGrupp3
     public class Program
     {
         public static void Main(string[] args)
-    {
+        {
             var host = CreateHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
@@ -26,14 +26,13 @@ namespace LMSGrupp3
                 var context = services.GetRequiredService<ApplicationDbContext>();
                 context.Database.Migrate();
 
-                var config = services.GetRequiredService<IConfiguration>();
+                var config = host.Services.GetRequiredService<IConfiguration>();
 
-                var adminpass = config["Adminpass"];
+               
 
                 try
                 {
-                    SeedData.InitializeAsync(services, adminpass).Wait();
-
+                    SeedData.InitializeAsync(services).Wait();
                 }
                 catch (Exception e)
                 {
