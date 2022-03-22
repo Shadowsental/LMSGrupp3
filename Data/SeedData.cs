@@ -45,6 +45,8 @@ namespace LMSGrupp3.Data
                 var firstname = faker.Name.FirstName();
                 var lastname = faker.Name.LastName();
                 var email = faker.Internet.Email($"{firstname} {lastname}");
+
+
                 User student = new User()
                 {
                     FirstName =  firstname,
