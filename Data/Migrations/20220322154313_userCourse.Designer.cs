@@ -4,6 +4,7 @@ using LMSGrupp3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMSGrupp3.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220322154313_userCourse")]
+    partial class userCourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace LMSGrupp3.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("CourseUser", b =>
-                {
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CourseId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("CourseUser");
-                });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Activity", b =>
                 {
@@ -111,6 +98,9 @@ namespace LMSGrupp3.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("Courses");
                 });
@@ -259,6 +249,8 @@ namespace LMSGrupp3.Data.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -423,21 +415,6 @@ namespace LMSGrupp3.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CourseUser", b =>
-                {
-                    b.HasOne("LMSGrupp3.Models.Entities.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LMSGrupp3.Models.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Activity", b =>
                 {
                     b.HasOne("LMSGrupp3.Models.Entities.ActivityType", "ActivityType")
@@ -493,6 +470,15 @@ namespace LMSGrupp3.Data.Migrations
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("LMSGrupp3.Models.Entities.User", b =>
+                {
+                    b.HasOne("LMSGrupp3.Models.Entities.Course", "Course")
+                        .WithMany("Users")
+                        .HasForeignKey("CourseId");
 
                     b.Navigation("Course");
                 });
@@ -584,6 +570,8 @@ namespace LMSGrupp3.Data.Migrations
                     b.Navigation("Modules");
 
                     b.Navigation("UserCourses");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Module", b =>

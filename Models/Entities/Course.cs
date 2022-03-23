@@ -14,8 +14,9 @@ namespace LMSGrupp3.Models.Entities
 
 		//NavProp
 		public ICollection<Module> Modules { get; set; }
-		public ICollection<User> Users { get; set; }
+		public virtual ICollection<User> Users { get; set; }
 		public ICollection<Document> Documents { get; set; }
+		public ICollection<UserCourse> UserCourses { get; set; }
 
 	}
 }

@@ -22,6 +22,14 @@
 
   <ItemGroup>
     <Folder Include="Models\ViewModels\Student\" />
+    <Folder Include="Views\Users\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\User\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

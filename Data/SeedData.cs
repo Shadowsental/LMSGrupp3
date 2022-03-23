@@ -2,6 +2,12 @@
 using LMSGrupp3.Models.Entities;
 using Bogus;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using LMSGrupp3.Data;
+using LMSGrupp3.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LMSGrupp3.Data
 {
@@ -25,6 +31,7 @@ namespace LMSGrupp3.Data
             await db.AddRangeAsync(courses);
 
             await GetStudents();
+
             //await db.AddRangeAsync(students);
 
 
@@ -38,7 +45,7 @@ namespace LMSGrupp3.Data
         //Students
         private static async Task GetStudents()
         {
-                await CreateRole("Student");
+            await CreateRole("Student");
             for (int i = 0; i < 10; i++)
             {
 
@@ -47,12 +54,12 @@ namespace LMSGrupp3.Data
                 var email = faker.Internet.Email($"{firstname} {lastname}");
                 User student = new User()
                 {
-                    FirstName =  firstname,
+                    FirstName = firstname,
                     LastName = lastname,
                     UserName = email,
                     Email = email
-                    
                 };
+
 
                 await userManager.CreateAsync(student, "Bytmig53!");
                 await userManager.AddToRoleAsync(student, "Student");
@@ -87,20 +94,37 @@ namespace LMSGrupp3.Data
         private static IEnumerable<Course> GetCourses()
         {
             var courses = new List<Course>();
-
-            for (int i = 0; i < 4; i++)
+            new Course
             {
-                Course course = new Course()
-                {
-                    CourseName = faker.Commerce.ProductName(),
-                    Description = faker.Commerce.ProductDescription(),
-                    StartDate = DateTime.Now
-                };
-                courses.Add(course);
-            }
-
+                CourseName = ".NET",
+                Description = ":NET Programmering",
+                StartDate = DateTime.Now,
+                Users = new List<User>()
+            };
             return courses;
         }
+
+        private static IEnumerable<UserCourse> GetUserCourse(ApplicationDbContext db, Random random)
+        {
+            var courseIds = db.Courses.Where(c => c.CourseName == ".NET").Select(a => a.Id).ToArray();
+            var userIds = db.Users.Select(a => a.Id).ToArray();
+
+            var userCourses = new List<UserCourse>();
+            for(int i = 0; i < userIds.Length; i++)
+            {
+                userCourses.Add(new UserCourse
+                {
+                    UserId = userIds[i],
+                    CourseId = courseIds[random.Next(0, courseIds.Length - 1)]
+                });
+
+                db.UserCourses.AddRange(userCourses);
+                db.SaveChanges();
+            }
+            return userCourses;
+
+        }
+
 
 
         //Activities

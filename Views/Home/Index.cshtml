@@ -8,9 +8,6 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -42,8 +39,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            <td> 
+                @Html.DisplayFor(modelItem => item.Course.CourseName)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                </td>
         </tr>
 }
     </tbody>

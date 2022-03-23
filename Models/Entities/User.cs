@@ -16,8 +16,10 @@ namespace LMSGrupp3.Models.Entities
 
 
 	//NavProp
-	public Course Course { get; set; }
+		public virtual Course Course { get; set; }
 		public ICollection<Document> Documents { get; set; }
+
+		public ICollection<UserCourse> UserCourse { get; set; }
 
 		//FK
 		public int? CourseId { get; set; }

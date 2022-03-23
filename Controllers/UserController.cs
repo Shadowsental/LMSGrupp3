@@ -7,19 +7,17 @@ using Microsoft.AspNetCore.Identity;
 using LMSGrupp3.Models.Entities;
 using LMSGrupp3.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 
 namespace LMSGrupp3.Controllers
 {
-    //[Authorize(Roles = "Teacher, Student")]
-    public class HomeController : Controller
+    public class UserController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext db;
         private readonly Faker faker;
         private readonly UserManager<User> userManager;
 
-        public HomeController(ApplicationDbContext db, UserManager<User> userManager)
+        public UserController(ApplicationDbContext db, UserManager<User> userManager)
         {
             this.db = db;
             this.userManager = userManager;
@@ -27,32 +25,35 @@ namespace LMSGrupp3.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = db.Users.Select(u => new { u.FirstName, u.LastName, u.Course}).ToList();
+            var model = db.Users.Select(u => new { u.FirstName, u.LastName, u.Course }).ToList();
             return View(await db.Users.ToListAsync());
         }
 
+        public async Task<IActionResult> UserToggle(int? id)
+        {
+            if (id is null) return BadRequest();
+
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Idnex");
+        }
 
         public async Task<IActionResult> Details(string? id)
         {
-            if (id == null)
+            if(id == null)
             {
                 return NotFound();
             }
 
             var user = await db.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
-                
-             if (user == null)
+
+            if(user == null)
             {
                 return NotFound();
             }
 
             return View(user);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
