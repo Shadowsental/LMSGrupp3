@@ -56,7 +56,7 @@ namespace LMSGrupp3.Migrations
 
                     b.HasIndex("ModuleId");
 
-                    b.ToTable("ActivityModel");
+                    b.ToTable("ActivityModel", (string)null);
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.ActivityType", b =>
@@ -77,7 +77,7 @@ namespace LMSGrupp3.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ActivityType");
+                    b.ToTable("ActivityType", (string)null);
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Course", b =>
@@ -104,7 +104,7 @@ namespace LMSGrupp3.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Course");
+                    b.ToTable("Course", (string)null);
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Document", b =>
@@ -159,7 +159,7 @@ namespace LMSGrupp3.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Document");
+                    b.ToTable("Document", (string)null);
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Module", b =>
@@ -191,7 +191,7 @@ namespace LMSGrupp3.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Module");
+                    b.ToTable("Module", (string)null);
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.User", b =>
@@ -275,7 +275,7 @@ namespace LMSGrupp3.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("UserCourse");
+                    b.ToTable("UserCourse", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

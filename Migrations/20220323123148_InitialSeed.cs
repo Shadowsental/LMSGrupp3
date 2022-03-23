@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LMSGrupp3.Migrations
 {
-    public partial class redovisning : Migration
+    public partial class InitialSeed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -24,12 +24,10 @@ namespace LMSGrupp3
 
                 var config = host.Services.GetRequiredService<IConfiguration>();
 
-                // dotnet user-secrets set  "GYM:AdminPW" "FooBar77!" + admin@gym.se
-
-                // var AdminPw = config["GYM:AdminPW"];
+                
                 try
                 {
-                    // SeedData.Initialize(services, AdminPw).Wait();
+                   
                     SeedData.Initialize(services).Wait();
                 }
                 catch (Exception ex)

@@ -32,7 +32,7 @@ namespace LMSGrupp3
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -42,7 +42,7 @@ namespace LMSGrupp3
                 
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddSingleton<IFormFile, LMSFormFile>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +67,7 @@ namespace LMSGrupp3
             app.UseRouting();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
