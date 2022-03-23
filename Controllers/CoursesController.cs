@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LMSGrupp3.Controllers
 {
-    [Authorize(Roles = "Teacher,Student")]
+    //[Authorize(Roles = "Teacher,Student")]
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;

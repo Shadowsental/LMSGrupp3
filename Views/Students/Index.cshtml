@@ -2,8 +2,8 @@
 @using System.Globalization;
 @{
     ViewData["Title"] = "Studentvy";
-    CultureInfo culture = CultureInfo.CreateSpecificCulture("sv-SE");  // en-US
-    CultureInfo ci = CultureInfo.InvariantCulture;
+    //CultureInfo culture = CultureInfo.CreateSpecificCulture("sv-SE");  // en-US
+    //CultureInfo ci = CultureInfo.InvariantCulture;
 }
 
 @{ if (Model != null)
@@ -40,8 +40,8 @@
                 <div class="row stuModuleRow">
                     @{
 
-                        var moduleStart = item.StartTime.ToString("dd/MM", ci);  // var moduleStart = String.Format("{0:d/M/yyyy HH:mm:ss}", item.StartTime);
-                        var moduleEnd = item.EndTime.ToString("dd/MM", ci);      // var moduleEnd = item.EndTime.ToString("yyddMM hh:mm", ci);
+                        var moduleStart = item.StartTime.ToString("dd/MM");  // var moduleStart = String.Format("{0:d/M/yyyy HH:mm:ss}", item.StartTime);
+                        var moduleEnd = item.EndTime.ToString("dd/MM");      // var moduleEnd = item.EndTime.ToString("yyddMM hh:mm", ci);
 
                     }
                     @*<div class="col-md-9 col-sm-8">*@
@@ -76,8 +76,8 @@
                         // var timeStart = activity.StartDate.ToString("yyMMdd hh:mm"); /*yyyy - MM - dd hh: mm*/
                         //var timeEnd = activity.StopDate.ToString("yyMMdd hh:mm");
 
-                        var timeStart = activity.StartDate.ToString("d/MM hh:mm", ci);
-                        var timeEnd = activity.StopDate.ToString("d/MM hh:mm", ci);
+                        var timeStart = activity.StartDate.ToString("d/MM hh:mm");
+                        var timeEnd = activity.StopDate.ToString("d/MM hh:mm");
 
                         <div class="row actRow">
                             <div class="col-sm-4 font-weight-bold">
