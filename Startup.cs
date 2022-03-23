@@ -64,6 +64,8 @@ namespace LMSGrupp3
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseRouting();
+
             app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
