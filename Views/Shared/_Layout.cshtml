@@ -36,7 +36,7 @@
                         {
                             <ul class="navbar-nav flex-grow-1">
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index">Kurser</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a>
                                 </li>
                                 @*<li class="nav-item">
                                     <a class="nav-link" asp-area="" asp-controller="Documents" asp-action="Create">Lägg till dokument</a>
@@ -49,7 +49,7 @@
                                     </li>*@
                                 <li class="nav-item">
                                     @*<a class="nav-link" asp-area="Identity" asp-page="/Account/Create" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Lägg till Användare</a>*@
-                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Index">Användare</a>
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Index">User</a>
                                 </li>
 
                             </ul>
@@ -59,10 +59,10 @@
                         {
                             <ul class="navbar-nav flex-grow-1">
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Student" asp-action="Index">Min kurs</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Student" asp-action="Index">My Course</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="CourseStudents">Klasslista</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="CourseStudents">Course Student List</a>
                                 </li>
                             </ul>
                         }
