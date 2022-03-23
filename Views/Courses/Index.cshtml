@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<LMSGrupp3.Models.Entities.Course>
 
 @{
-    ViewData["Title"] = "Kurser";
+    ViewData["Title"] = "Courses";
 }
 
-<h1>Kurser</h1>
+<h1>Courses</h1>
 
 <p>
     <a class="btn btn-sm btn-primary" asp-action="Create">
-        <i class="fas fa-plus"></i> Skapa ny kurs
+        <i class="fas fa-plus"></i> Create New Course
     </a>
 </p>
 
@@ -29,19 +29,19 @@
     <table class="table table-hover table-condensed">
         <thead>
             <tr>
-                <th title="Kursens namn">
+                <th title="Course Name">
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
-                <th title="Kursbeskrivning">
+                <th title="Description">
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
-                <th title="Kursens startdatum">
+                <th title="Start Date">
                     @Html.DisplayNameFor(model => model.StartDate)
                 </th>
-                <th title="Antal moduler som ingår i kursen">
+                <th title="Number of Modules">
                     Antal&nbsp;@Html.DisplayNameFor(model => model.Modules)
                 </th>
-                <th title="Antal studenter som är inskrivna på kursen">
+                <th title="Number of Students Assigned">
                     Antal&nbsp;@Html.DisplayNameFor(model => model.Users)
                 </th>
                 <th>
@@ -61,11 +61,11 @@
                 }
                 @if (moduleTitle == "")
                 {
-                    moduleTitle = "Inga moduler i " + item.Name + "!";
+                    moduleTitle = "No Modules in " + item.Name + "!";
                 }
                 else
                 {
-                    moduleTitle = "Moduler i " + item.Name + ": " + moduleTitle;
+                    moduleTitle = "Modules in " + item.Name + ": " + moduleTitle;
                 }
 
 
@@ -76,23 +76,23 @@
                 }
                 @if (userTitle == "")
                 {
-                    userTitle = "Inga Användare på " + item.Name + "!";
+                    userTitle = "No Users at " + item.Name + "!";
                 }
                 else
                 {
-                    userTitle = "Användare på " + item.Name + ": " + userTitle;
+                    userTitle = "Users at " + item.Name + ": " + userTitle;
                 }
 
 
 
                 <tr onclick="window.location.href='Courses/Details/@item.Id'">
-                    <td title="Klicka för att visa detaljer & lägga till moduler.">
+                    <td title="Click to show details and add Modules">
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
-                    <td title="Klicka för att visa detaljer & lägga till moduler.">
+                    <td title="Click to show details and add Modules">
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
-                    <td title="Klicka för att visa detaljer & lägga till moduler.">
+                    <td title="Click to show details and add Modules">
                         @Html.DisplayFor(modelItem => item.StartDate)
                     </td>
                     <td align="center" title="@moduleTitle">
@@ -110,5 +110,5 @@
 else
 {
     <hr />
-    <h5><i>Inga kurser är f n inlagda!</i></h5>
+    <h5><i>No Courses currently added</i></h5>
 }

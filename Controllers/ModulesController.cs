@@ -95,13 +95,13 @@ namespace LMSGrupp3
                     if (module.StartTime < course.StartDate)  // Före kurs
                     {
                         timeError = true;
-                        ViewData["errorTimeStart"] = "Starttid kan inte vara före kursens starttid!";
+                        ViewData["errorTimeStart"] = "Start Time before course Start Time, not ok.!";
                     }
 
                     if (module.EndTime < module.StartTime)  // Före starttid
                     {
                         timeError = true;
-                        ViewData["errorTimeEnd"] = "Sluttid kan inte vara före starttid!";
+                        ViewData["errorTimeEnd"] = "End Time before start time, not valid!";
                     }
 
                     if (timeError == false)

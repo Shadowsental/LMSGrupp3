@@ -77,12 +77,12 @@ namespace LMSGrupp3
                     CultureInfo culture = CultureInfo.CreateSpecificCulture("sv-SE");  // en-US
                     CultureInfo ci = CultureInfo.InvariantCulture;
 
-                    // 2018-11-26T09:00:00.000
+                    
 
-                    // 24/12 12:30
+               
                     ViewData["modTimeStart"] = module.StartTime.ToString("dd/MM hh:mm", ci);
                     ViewData["modTimeEnd"] = module.EndTime.ToString("dd/MM hh:mm", ci);
-                    // 1999-12-24 12:30
+                
                     ViewData["startTime"] = startTime.ToString("yyyy-dd-MM hh:mm");
                     ViewData["endTime"] = endTime.ToString("yyyy-dd-MM hh:mm");
 

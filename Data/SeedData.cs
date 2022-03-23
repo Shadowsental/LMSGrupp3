@@ -54,51 +54,51 @@ namespace LMSGrupp3
 
                     // Teacher
                     var newUser = new newUser();
-                    newUser.Name = "Dimitris";
-                    newUser.Email = "dimitris@teacher.com";
-                    newUser.Password = "Teacher-1";
+                    newUser.Name = "David";
+                    newUser.Email = "david@teacher.com";
+                    newUser.Password = "Teacher-01";
                     newUser.Role = "Teacher";
                     await CreateUserAsync(userManager, roleManager, newUser);
 
                     // Student
                     newUser = new newUser();
-                    newUser.Name = "Fredrik";
-                    newUser.Email = "fredrik@student.com";
+                    newUser.Name = "Alex";
+                    newUser.Email = "alex@student.com";
                     newUser.Password = "Student-1";
                     newUser.Role = "Student";
                     await CreateUserAsync(userManager, roleManager, newUser);
 
                     newUser = new newUser();
-                    newUser.Name = "Göran";
-                    newUser.Email = "goran@student.com";
+                    newUser.Name = "Mattias";
+                    newUser.Email = "mattias@student.com";
                     newUser.Password = "Student-1";
                     newUser.Role = "Student";
                     await CreateUserAsync(userManager, roleManager, newUser);
 
                     newUser = new newUser();
-                    newUser.Name = "Jacob";
-                    newUser.Email = "jacob@student.com";
+                    newUser.Name = "Alicia";
+                    newUser.Email = "alicia@student.com";
                     newUser.Password = "Student-1";
                     newUser.Role = "Student";
                     await CreateUserAsync(userManager, roleManager, newUser);
 
                     newUser = new newUser();
-                    newUser.Name = "Saber";
-                    newUser.Email = "saber@student.com";
+                    newUser.Name = "Stina";
+                    newUser.Email = "stina@student.com";
                     newUser.Password = "Student-1";
                     newUser.Role = "Student";
                     await CreateUserAsync(userManager, roleManager, newUser);
 
                     newUser = new newUser();
-                    newUser.Name = "Melania";
-                    newUser.Email = "melania@student.com";
+                    newUser.Name = "Adam";
+                    newUser.Email = "adam@student.com";
                     newUser.Password = "Student-1";
                     newUser.Role = "Student";
                     await CreateUserAsync(userManager, roleManager, newUser);
 
                     newUser = new newUser();
-                    newUser.Name = "Carola";
-                    newUser.Email = "carola@student.com";
+                    newUser.Name = "Marie";
+                    newUser.Email = "marie@student.com";
                     newUser.Password = "Student-1";
                     newUser.Role = "Student";
                     await CreateUserAsync(userManager, roleManager, newUser);
@@ -109,10 +109,10 @@ namespace LMSGrupp3
                     if (context.ActivityType.Count() == 0)
                     {
                         var activityTypes = new List<ActivityType>();
-                        activityTypes.Add(new ActivityType { Name = "E-Learning", Description = "Studenten lär sig på egen hand genom att se på video på datorn." });
-                        activityTypes.Add(new ActivityType { Name = "Föreläsning", Description = "Läraren går igenom ett ämne." });
-                        activityTypes.Add(new ActivityType { Name = "Övningstillfälle", Description = "Studenten får göra övningar för att se om hen behärskar ett ämne." });
-                        activityTypes.Add(new ActivityType { Name = "Annat", Description = "Diverse andra aktiviteter." });
+                        activityTypes.Add(new ActivityType { Name = "E-Learning", Description = "Student can learn wherever whenever" });
+                        activityTypes.Add(new ActivityType { Name = "Lecture", Description = "Teacher on the same spot with the students in a physcial place" });
+                        activityTypes.Add(new ActivityType { Name = "Exercise", Description = "Student Assignments to keep practicing" });
+                        activityTypes.Add(new ActivityType { Name = "Other", Description = "Misc. activities" });
                         //context.ActivityType.RemoveRange(context.ActivityType);
                         context.ActivityType.AddRange(activityTypes);
                         context.SaveChanges();
@@ -123,9 +123,9 @@ namespace LMSGrupp3
                     if (context.Course.Count() == 0)
                     {
                         var courses = new List<Course>();
-                        courses.Add(new Course { Name = ".NET", Description = "Programmeringskurs i Microsoft .NET.", StartDate = DateTime.Parse("2018-11-26") });
-                        courses.Add(new Course { Name = "Java", Description = "Programmeringskurs i Java.", StartDate = DateTime.Parse("2019-01-05") });
-                        courses.Add(new Course { Name = "Tekniker", Description = "Lär dig bli datatekniker.", StartDate = DateTime.Parse("2019-02-25") });
+                        courses.Add(new Course { Name = ".NET", Description = "Coding course in Microsoft .NET.", StartDate = DateTime.Parse("2022-01-26") });
+                        courses.Add(new Course { Name = "Javascript", Description = "Coding course in Javascript.", StartDate = DateTime.Parse("2022-02-05") });
+                        courses.Add(new Course { Name = "Computer Whiz", Description = "Profess in Computers.", StartDate = DateTime.Parse("2022-02-25") });
                         //context.Course.RemoveRange(context.Course);
                         context.Course.AddRange(courses);
                         context.SaveChanges();
@@ -156,13 +156,13 @@ namespace LMSGrupp3
                     {
                         var courseIds = context.Course.Where(c => c.Name == ".NET").Select(a => a.Id).ToArray();
                         var modules = new List<Module>();
-                        modules.Add(new Module { Name = "C#", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "C# 7 (Objektorienterad programmering, Generics, Linq)", StartTime = DateTime.Parse("2018-11-26"), EndTime = DateTime.Parse("2018-12-14") });
-                        modules.Add(new Module { Name = "Testning", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Unittestning mm.", StartTime = DateTime.Parse("2018-12-17"), EndTime = DateTime.Parse("2019-01-02") });
-                        modules.Add(new Module { Name = "Webb", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "HTML5, CSS3, JavaScript.", StartTime = DateTime.Parse("2019-01-03"), EndTime = DateTime.Parse("2019-01-14") });
-                        modules.Add(new Module { Name = "MVC", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "ASP.NET MVC Core.", StartTime = DateTime.Parse("2019-01-15"), EndTime = DateTime.Parse("2019-01-30") });
-                        modules.Add(new Module { Name = "Databaser", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Entity framework & SQL.", StartTime = DateTime.Parse("2019-01-31"), EndTime = DateTime.Parse("2019-02-08") });
-                        modules.Add(new Module { Name = "Webbapplikationer", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Förhöj användarupplevelsen.", StartTime = DateTime.Parse("2019-02-11"), EndTime = DateTime.Parse("2019-02-21") });
-                        modules.Add(new Module { Name = "MVC Fördjupning", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Projektarbete Full-stack applikation.", StartTime = DateTime.Parse("2019-02-22"), EndTime = DateTime.Parse("2019-03-22") });
+                        modules.Add(new Module { Name = "C#", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "C# 7 (Polymorphism, Generics, Linq)", StartTime = DateTime.Parse("2021-11-26"), EndTime = DateTime.Parse("2021-12-14") });
+                        modules.Add(new Module { Name = "Testing", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Unit Testing etc.", StartTime = DateTime.Parse("2021-12-17"), EndTime = DateTime.Parse("2021-01-02") });
+                        modules.Add(new Module { Name = "Web", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "HTML5, CSS3, JavaScript.", StartTime = DateTime.Parse("2021-01-03"), EndTime = DateTime.Parse("2021-01-14") });
+                        modules.Add(new Module { Name = "MVC", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "ASP.NET MVC Core.", StartTime = DateTime.Parse("2021-01-15"), EndTime = DateTime.Parse("2021-01-30") });
+                        modules.Add(new Module { Name = "Database", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Entity framework & SQL.", StartTime = DateTime.Parse("2021-01-31"), EndTime = DateTime.Parse("2021-02-08") });
+                        modules.Add(new Module { Name = "Webbapp", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Frontend Superskills.", StartTime = DateTime.Parse("2021-02-11"), EndTime = DateTime.Parse("2021-02-21") });
+                        modules.Add(new Module { Name = "MVC Nex Level", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Teamwork Full-stack App.", StartTime = DateTime.Parse("2021-02-22"), EndTime = DateTime.Parse("2021-03-22") });
                         //context.Module.RemoveRange(context.Module);
                         context.Module.AddRange(modules);
                         context.SaveChanges();
@@ -171,8 +171,8 @@ namespace LMSGrupp3
                     // Seed ActivityModel
                     if (context.ActivityModel.Count() == 0)
                     {
-                        string[] randomNames = { "Scott Allen", "Susan Johnson", "Bill Gates", "Jeff Bezos", "Steve Balmer" };
-                        string[] randomWords = { "Fördjupning", "Grunderna", "Info om", "Mera om" };
+                        string[] randomNames = { "Hacker One", "Fragglarna", "The Rock", "Blondinbella", "Antagonist" };
+                        string[] randomWords = { "Drilldeep", "Basics", "About", "More to Add" };
                         var activityTypes = context.ActivityType.ToArray();
                         var modules = context.Module.ToArray();
                         var activityModels = new List<ActivityModel>();

@@ -41,9 +41,9 @@ namespace LMSGrupp3.Controllers
                     .CourseId);
 
             if (classMates != null)
-                ViewData["Rubrik"] = "Klasskompisar på";
+                ViewData["Rubrik"] = "Course Mates";
             else
-                ViewData["Rubrik"] = "Du verkar inte gå på någon kurs - kontakta din lärare eller skolan";
+                ViewData["Rubrik"] = "Not Currently assigned to Course";
 
             return View(classMates);
         }

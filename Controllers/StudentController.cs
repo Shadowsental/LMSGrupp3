@@ -50,7 +50,7 @@ namespace Lexicon_LMS.Controllers
             }
             else
             {
-                ViewData["Rubrik"] = "Du verkar inte gå på någon kurs - kontakta din lärare eller skolan";
+                ViewData["Rubrik"] = "You are not assigned to a course.";
             }
 
             return View(course);
