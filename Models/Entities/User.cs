@@ -8,20 +8,12 @@ namespace LMSGrupp3.Models.Entities
 {
 	public class User : IdentityUser
 {
-	public string FirstName { get; set; }
-	public string LastName { get; set; }
 
-	//public string Email { get; set; }
-	public string FullName => $"{FirstName} {LastName}";
+		public string Name { get; set; }
 
-
-	//NavProp
-	public Course Course { get; set; }
-		public ICollection<Document> Documents { get; set; }
-
-		//FK
-		public int? CourseId { get; set; }
-
+		public ICollection<UserCourse> Courses { get; set; }
+		
+		
 
 	}
 }

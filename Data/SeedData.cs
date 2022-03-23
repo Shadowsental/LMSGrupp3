@@ -1,165 +1,233 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LMSGrupp3.Data;
 using LMSGrupp3.Models.Entities;
-using Bogus;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace LMSGrupp3.Data
+namespace LMSGrupp3
 {
-    public static class SeedData
+    public partial class Program
     {
-        private static Faker faker = new Faker();
-        private static IEnumerable<Course> courses;
-        private static UserManager<User> userManager;
-        private static RoleManager<IdentityRole> roleManager;
-
-        public static async Task InitAsync(ApplicationDbContext db, Microsoft.AspNetCore.Identity.UserManager<User> usermanager, RoleManager<IdentityRole> rolemanager)
+        public class newUser
         {
-
-            if (await db.Users.AnyAsync()) return; 
-
-             userManager = usermanager;
-            roleManager = rolemanager;
-
-          
-            courses = GetCourses();
-            await db.AddRangeAsync(courses);
-
-            await GetStudents();
-            //await db.AddRangeAsync(students);
-
-
-            //var activities = GetActivities();
-            //await db.AddRangeAsync(activities);
-
-            await db.SaveChangesAsync();
+            public string Name;
+            public string Email;
+            public string Password;
+            public string Role;
         }
 
-
-        //Students
-        private static async Task GetStudents()
+        public static class SeedData
         {
-                await CreateRole("Student");
-            for (int i = 0; i < 10; i++)
+            public static async Task Initialize(IServiceProvider serviceProvider)
             {
-
-                var firstname = faker.Name.FirstName();
-                var lastname = faker.Name.LastName();
-                var email = faker.Internet.Email($"{firstname} {lastname}");
-
-
-                User student = new User()
+                using (var context = new ApplicationDbContext(
+                 serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
                 {
-                    FirstName =  firstname,
-                    LastName = lastname,
-                    UserName = email,
-                    Email = email
-                    
-                };
+                    var userManager = serviceProvider.GetService<UserManager<User>>();
+                    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                await userManager.CreateAsync(student, "Bytmig53!");
-                await userManager.AddToRoleAsync(student, "Student");
+                    if (roleManager == null || userManager == null)
+                    {
+                        throw new Exception("roleManager or userManager is null");
+                    }
+
+                    // Roles
+                    var roleNames = new[] { "Teacher", "Student" };
+                    foreach (var name in roleNames)
+                    {
+                        // Lägg till rollen om den inte finns
+                        bool adminRoleExists = await roleManager.RoleExistsAsync(name);
+                        if (!adminRoleExists)
+                        {
+                            var role = new IdentityRole { Name = name };
+                            var result = await roleManager.CreateAsync(role);
+                            if (!result.Succeeded)
+                            {
+                                throw new Exception(string.Join("\n", result.Errors));
+                            }
+                        }
+                    }
+
+                    // Teacher
+                    var newUser = new newUser();
+                    newUser.Name = "Dimitris";
+                    newUser.Email = "dimitris@teacher.com";
+                    newUser.Password = "Teacher-1";
+                    newUser.Role = "Teacher";
+                    await CreateUserAsync(userManager, roleManager, newUser);
+
+                    // Student
+                    newUser = new newUser();
+                    newUser.Name = "Fredrik";
+                    newUser.Email = "fredrik@student.com";
+                    newUser.Password = "Student-1";
+                    newUser.Role = "Student";
+                    await CreateUserAsync(userManager, roleManager, newUser);
+
+                    newUser = new newUser();
+                    newUser.Name = "Göran";
+                    newUser.Email = "goran@student.com";
+                    newUser.Password = "Student-1";
+                    newUser.Role = "Student";
+                    await CreateUserAsync(userManager, roleManager, newUser);
+
+                    newUser = new newUser();
+                    newUser.Name = "Jacob";
+                    newUser.Email = "jacob@student.com";
+                    newUser.Password = "Student-1";
+                    newUser.Role = "Student";
+                    await CreateUserAsync(userManager, roleManager, newUser);
+
+                    newUser = new newUser();
+                    newUser.Name = "Saber";
+                    newUser.Email = "saber@student.com";
+                    newUser.Password = "Student-1";
+                    newUser.Role = "Student";
+                    await CreateUserAsync(userManager, roleManager, newUser);
+
+                    newUser = new newUser();
+                    newUser.Name = "Melania";
+                    newUser.Email = "melania@student.com";
+                    newUser.Password = "Student-1";
+                    newUser.Role = "Student";
+                    await CreateUserAsync(userManager, roleManager, newUser);
+
+                    newUser = new newUser();
+                    newUser.Name = "Carola";
+                    newUser.Email = "carola@student.com";
+                    newUser.Password = "Student-1";
+                    newUser.Role = "Student";
+                    await CreateUserAsync(userManager, roleManager, newUser);
+
+                    var indexPicker = new Random();
+
+                    // Seed ActivityType
+                    if (context.ActivityType.Count() == 0)
+                    {
+                        var activityTypes = new List<ActivityType>();
+                        activityTypes.Add(new ActivityType { Name = "E-Learning", Description = "Studenten lär sig på egen hand genom att se på video på datorn." });
+                        activityTypes.Add(new ActivityType { Name = "Föreläsning", Description = "Läraren går igenom ett ämne." });
+                        activityTypes.Add(new ActivityType { Name = "Övningstillfälle", Description = "Studenten får göra övningar för att se om hen behärskar ett ämne." });
+                        activityTypes.Add(new ActivityType { Name = "Annat", Description = "Diverse andra aktiviteter." });
+                        //context.ActivityType.RemoveRange(context.ActivityType);
+                        context.ActivityType.AddRange(activityTypes);
+                        context.SaveChanges();
+                    }
+
+
+                    // Seed Course
+                    if (context.Course.Count() == 0)
+                    {
+                        var courses = new List<Course>();
+                        courses.Add(new Course { Name = ".NET", Description = "Programmeringskurs i Microsoft .NET.", StartDate = DateTime.Parse("2018-11-26") });
+                        courses.Add(new Course { Name = "Java", Description = "Programmeringskurs i Java.", StartDate = DateTime.Parse("2019-01-05") });
+                        courses.Add(new Course { Name = "Tekniker", Description = "Lär dig bli datatekniker.", StartDate = DateTime.Parse("2019-02-25") });
+                        //context.Course.RemoveRange(context.Course);
+                        context.Course.AddRange(courses);
+                        context.SaveChanges();
+                    }
+
+                    // Seed UserCourse
+                    if (context.UserCourse.Count() == 0)
+                    {
+                        var courseIds = context.Course.Where(c => c.Name == ".NET").Select(a => a.Id).ToArray();
+                        var userIds = context.Users.Select(a => a.Id).ToArray();
+
+                        var userCourses = new List<UserCourse>();
+                        for (int i = 0; i < userIds.Length; i++)
+                            userCourses.Add(new UserCourse
+                            {
+                                UserId = userIds[i]
+                                ,
+                                CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)]
+                            });
+
+                        //context.Course.RemoveRange(context.Course);
+                        context.UserCourse.AddRange(userCourses);
+                        context.SaveChanges();
+                    }
+
+                    // Seed Module .NET Påbyggnadsutbildning
+                    if (context.Module.Count() == 0)
+                    {
+                        var courseIds = context.Course.Where(c => c.Name == ".NET").Select(a => a.Id).ToArray();
+                        var modules = new List<Module>();
+                        modules.Add(new Module { Name = "C#", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "C# 7 (Objektorienterad programmering, Generics, Linq)", StartTime = DateTime.Parse("2018-11-26"), EndTime = DateTime.Parse("2018-12-14") });
+                        modules.Add(new Module { Name = "Testning", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Unittestning mm.", StartTime = DateTime.Parse("2018-12-17"), EndTime = DateTime.Parse("2019-01-02") });
+                        modules.Add(new Module { Name = "Webb", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "HTML5, CSS3, JavaScript.", StartTime = DateTime.Parse("2019-01-03"), EndTime = DateTime.Parse("2019-01-14") });
+                        modules.Add(new Module { Name = "MVC", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "ASP.NET MVC Core.", StartTime = DateTime.Parse("2019-01-15"), EndTime = DateTime.Parse("2019-01-30") });
+                        modules.Add(new Module { Name = "Databaser", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Entity framework & SQL.", StartTime = DateTime.Parse("2019-01-31"), EndTime = DateTime.Parse("2019-02-08") });
+                        modules.Add(new Module { Name = "Webbapplikationer", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Förhöj användarupplevelsen.", StartTime = DateTime.Parse("2019-02-11"), EndTime = DateTime.Parse("2019-02-21") });
+                        modules.Add(new Module { Name = "MVC Fördjupning", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Projektarbete Full-stack applikation.", StartTime = DateTime.Parse("2019-02-22"), EndTime = DateTime.Parse("2019-03-22") });
+                        //context.Module.RemoveRange(context.Module);
+                        context.Module.AddRange(modules);
+                        context.SaveChanges();
+                    }
+
+                    // Seed ActivityModel
+                    if (context.ActivityModel.Count() == 0)
+                    {
+                        string[] randomNames = { "Scott Allen", "Susan Johnson", "Bill Gates", "Jeff Bezos", "Steve Balmer" };
+                        string[] randomWords = { "Fördjupning", "Grunderna", "Info om", "Mera om" };
+                        var activityTypes = context.ActivityType.ToArray();
+                        var modules = context.Module.ToArray();
+                        var activityModels = new List<ActivityModel>();
+                        foreach (var module in modules)
+                        {
+                            for (int i = 0; i < indexPicker.Next(1, 10); i++)
+                            {
+                                var activityTypeIndex = indexPicker.Next(0, activityTypes.Length - 1);
+                                var dateIndex = (module.EndTime - module.StartTime).Days;
+                                var startDate = module.StartTime.AddDays(indexPicker.Next(0, dateIndex - 3)).AddHours(9);
+                                var stopDate = startDate.AddDays(indexPicker.Next(0, 3)).AddHours(8);
+                                activityModels.Add(new ActivityModel
+                                {
+                                    Name = randomWords[indexPicker.Next(0, randomWords.Length - 1)] + " " + module.Name,
+                                    ModuleId = module.Id,
+                                    ActivityTypeId = activityTypes[activityTypeIndex].Id,
+                                    Description = activityTypes[activityTypeIndex].Name + " med " + randomNames[indexPicker.Next(0, randomNames.Length - 1)] + ".",
+                                    StartDate = startDate,
+                                    StopDate = stopDate
+                                });
+                            }
+                        }
+                        context.ActivityModel.AddRange(activityModels);
+                        context.SaveChanges();
+                    }
+                }
+            }
+
+            private static async Task<bool> CreateUserAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, newUser newUser)
+            {
+                Boolean success = false;
+
+                if (userManager != null && roleManager != null)
+                {
+                    var foundUser = await userManager.FindByEmailAsync(newUser.Email);
+                    if (foundUser == null)
+                    {
+                        var user = new User { Name = newUser.Name, UserName = newUser.Email, Email = newUser.Email };
+                        var addUserResult = await userManager.CreateAsync(user, newUser.Password);
+
+                        if (addUserResult.Succeeded)
+                        {
+                            var addToRoleResultAdmin = await userManager.AddToRoleAsync(user, newUser.Role);
+                            if (addToRoleResultAdmin.Succeeded)
+                                success = true;
+                        }
+                    }
+                }
+
+                return success;
             }
         }
 
-        private static async Task CreateRole(string roleName)
-        {
-            var res = await roleManager.CreateAsync(new IdentityRole { Name = roleName });
-        }
 
 
-        //Teachers
-        private static IEnumerable<User> GetTeachers()
-        {
-            var teachers = new List<User>();
 
-            for(int i = 0; i < 3; i++)
-            {
-                User teacher = new User()
-                {
-                    FirstName = faker.Name.FirstName(),
-                    LastName = faker.Name.LastName()
-                };
-                teachers.Add(teacher);
-            }
-            return teachers;
-        }
-
-
-        //Courses
-        private static IEnumerable<Course> GetCourses()
-        {
-            var courses = new List<Course>();
-
-            for (int i = 0; i < 4; i++)
-            {
-                Course course = new Course()
-                {
-                    CourseName = faker.Commerce.ProductName(),
-                    Description = faker.Commerce.ProductDescription(),
-                    StartDate = DateTime.Now
-                };
-                courses.Add(course);
-            }
-
-            return courses;
-        }
-
-
-        //Activities
-        private static IEnumerable<Activity> GetActivities()
-        {
-            var activities = new List<Activity>();
-
-            for (int i = 0; i < 2; i++)
-            {
-                Activity activity = new Activity()
-                {
-                    Name = faker.Commerce.ProductName(),
-                    Description = faker.Commerce.ProductDescription(),
-                    StartTime = faker.Date.Past(),
-                    EndTime = faker.Date.Future()
-                };
-                activities.Add(activity);
-            }
-
-            return activities;
-        }
-
-
-        //Activity Types
-        private static IEnumerable<ActivityType> GetActivityTypes()
-        {
-            var activityTypes = new List<ActivityType>();
-
-            for(int i = 0; i < 2; i++)
-            {
-                ActivityType activityType = new ActivityType()
-                {
-                    Name = faker.Company.CompanyName()
-                };
-                activityTypes.Add(activityType);
-            }
-            return activityTypes;
-        }
-
-        //Modules
-        private static IEnumerable<Module> GetModules()
-        {
-            var modules = new List<Module>();
-
-            for(int i = 0; i < 2; i++)
-            {
-                Module module = new Module()
-                {
-                    Name = faker.Commerce.ProductName(),
-                    Description = faker.Commerce.ProductDescription(),
-                    StartTime = faker.Date.Past(),
-                    EndTime = faker.Date.Future()
-                };
-                modules.Add(module);
-            }
-
-            return modules;
-        }
     }
 }

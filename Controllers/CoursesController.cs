@@ -1,29 +1,64 @@
-﻿#nullable disable
+﻿using LMSGrupp3.Data;
+using LMSGrupp3.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using LMSGrupp3.Data;
-using LMSGrupp3.Models.Entities;
 
 namespace LMSGrupp3.Controllers
 {
+    [Authorize(Roles = "Teacher,Student")]
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public CoursesController(ApplicationDbContext context)
+        public CoursesController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
+        }
+
+        // GET: Courses
+        public async Task<IActionResult> CourseStudents()
+        {
+            User currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            UserCourse actCourse = _context.UserCourse.FirstOrDefault(c => c.UserId == currentUser.Id);
+            Course classMates;
+
+            classMates = await _context
+                .Course
+                .Include(aus => aus.Users)
+                    .ThenInclude(au => au.User)
+                .FirstOrDefaultAsync(c => c.Id == _context
+                    .UserCourse
+                    .FirstOrDefault(u => u.UserId == _userManager
+                        .GetUserId(HttpContext.User)
+                        .ToString())
+                    .CourseId);
+
+            if (classMates != null)
+                ViewData["Rubrik"] = "Klasskompisar på";
+            else
+                ViewData["Rubrik"] = "Du verkar inte gå på någon kurs - kontakta din lärare eller skolan";
+
+            return View(classMates);
         }
 
         // GET: Courses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Courses.ToListAsync());
+            return View(await _context
+                .Course
+                .Include(m => m.Modules)
+                .ThenInclude(ma => ma.ModuleActivities)
+                .ThenInclude(at => at.ActivityType)
+                .Include(auc => auc.Users)
+                .ThenInclude(au => au.User)
+                .ToListAsync());
         }
 
         // GET: Courses/Details/5
@@ -34,8 +69,12 @@ namespace LMSGrupp3.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Courses
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var course = await _context.Course
+                .Include(m => m.Modules)
+                .ThenInclude(ma => ma.ModuleActivities)
+                .Include(au => au.Users)
+                .FirstOrDefaultAsync(m => m.Id == id)
+                ;
             if (course == null)
             {
                 return NotFound();
@@ -47,15 +86,16 @@ namespace LMSGrupp3.Controllers
         // GET: Courses/Create
         public IActionResult Create()
         {
-            return View();
+            var course = new Course { StartDate = DateTime.UtcNow.Date };
+            return View(course);
         }
 
         // POST: Courses/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CourseName,Description,StartDate")] Course course)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +114,7 @@ namespace LMSGrupp3.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Courses.FindAsync(id);
+            var course = await _context.Course.FindAsync(id);
             if (course == null)
             {
                 return NotFound();
@@ -83,11 +123,11 @@ namespace LMSGrupp3.Controllers
         }
 
         // POST: Courses/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CourseName,Description,StartDate")] Course course)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate")] Course course)
         {
             if (id != course.Id)
             {
@@ -125,7 +165,7 @@ namespace LMSGrupp3.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Courses
+            var course = await _context.Course
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (course == null)
             {
@@ -140,15 +180,15 @@ namespace LMSGrupp3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var course = await _context.Courses.FindAsync(id);
-            _context.Courses.Remove(course);
+            var course = await _context.Course.FindAsync(id);
+            _context.Course.Remove(course);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CourseExists(int id)
         {
-            return _context.Courses.Any(e => e.Id == id);
+            return _context.Course.Any(e => e.Id == id);
         }
     }
 }

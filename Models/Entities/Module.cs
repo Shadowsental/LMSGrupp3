@@ -17,8 +17,8 @@ namespace LMSGrupp3.Models.Entities
 
 		//NavProp
 		public Course Course { get; set; }
-		public ICollection<Activity> Activities { get; set; }
-		public ICollection<Document> Documents { get; set; }
+		public ICollection<ActivityModel> ModuleActivities { get; set; }
+		
 
 		//FK
 		public int CourseId { get; set; }

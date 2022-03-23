@@ -1,19 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace LMSGrupp3.Models.Entities
 {
-	public class Activity
+	public class ActivityModel
 	{
 		public int Id { get; set; }
+
+		[ForeignKey("ActivityTypeId")]
+		public int? ActivityTypeId { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public DateTime StartTime { get; set; }
-		public DateTime EndTime { get; set; }
+		public DateTime StartDate { get; set; }
+
+		public DateTime StopDate { get; set; }
+
 
 		//NavProp
 		public Module Module { get; set; }
@@ -22,7 +25,9 @@ namespace LMSGrupp3.Models.Entities
 
 		//FK
 
-		public int ActivityTypeId { get; set; }
+		
+		
+		[ForeignKey("ModuleId")]
 		public int ModuleId { get; set; }
 
 

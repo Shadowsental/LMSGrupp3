@@ -1,4 +1,5 @@
 ﻿using System;
+using LMSGrupp3.Models;
 using LMSGrupp3.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

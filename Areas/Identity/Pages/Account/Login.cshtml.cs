@@ -12,8 +12,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-
-
 namespace LMSGrupp3.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
