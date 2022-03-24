@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Lexicon_LMS.Controllers
 {
-    //[Authorize(Roles = "Teacher,Student")]
+    [Authorize(Roles = "Teacher,Student")]
     public class StudentController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,8 +27,33 @@ namespace Lexicon_LMS.Controllers
         // GET: Student
         public async Task<IActionResult> Index()
         {
-            var model = _context.Course.Select(u => new { u.Name, u.Modules, u.Description }).ToList();
-            return View(await _context.Course.ToListAsync());
+            UserCourse actCourse = null;
+            Course course = null;
+            var courseId = 0;
+
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            if (currentUser != null)
+            {
+                actCourse = _context.UserCourse.FirstOrDefault(c => c.UserId == currentUser.Id);
+            }
+
+            if (actCourse != null)
+            {
+                courseId = actCourse.CourseId;
+                course = await _context.Course
+                    .Include(m => m.Modules)
+                    .ThenInclude(ma => ma.ModuleActivities)
+                    .ThenInclude(ma => ma.ActivityType)
+                    .Include(au => au.Users)
+                    .FirstOrDefaultAsync(m => m.Id == courseId);
+                ViewData["Rubrik"] = course.Name;
+            }
+            else
+            {
+                ViewData["Rubrik"] = "Du verkar inte gå på någon kurs - kontakta din lärare eller skolan";
+            }
+
+            return View(course);
         }
 
         //// GET: Student/Details/5

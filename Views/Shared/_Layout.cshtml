@@ -72,7 +72,7 @@
         </nav>
     </header>
     <div class="container">
-        <partial name="_CookieConsentPartial" />
+       
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -81,6 +81,7 @@
     <footer class="border-top footer text-muted text-center">
         <div class="container">
             &copy; 2022 - Lexicon LMS - Alex & Mattias
+             <partial name="_CookieConsentPartial" />
             @*- <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
         </div>
     </footer>

@@ -12,7 +12,7 @@ namespace LMSGrupp3.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View("~/Views/Shared/_LoginPartial.cshtml"); 
         }
 
         public IActionResult Privacy()
