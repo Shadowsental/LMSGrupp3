@@ -10,8 +10,8 @@ namespace LMSGrupp3.Models.Entities
 		public int Id { get; set; }
 		public string Name { get; set; }
 
-		//NavProp
-		public ICollection<Activity> Activities { get; set; }
+		public string Description { get; set; }
 
+		
 	}
 }
