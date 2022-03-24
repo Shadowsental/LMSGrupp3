@@ -2,6 +2,7 @@ a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
+    
 }
 
 /* Provide sufficient contrast against white background */
@@ -23,9 +24,6 @@ a {
 
 /* Sticky footer styles
 -------------------------------------------------- */
-html {
-    font-size: 14px;
-}
 
 @media (min-width: 768px) {
     html {
@@ -53,12 +51,15 @@ button.accept-policy {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
+    font-size: 14px;
+    height: 100%;
     position: relative;
     min-height: 100%;
 }
 
 body {
     /* Margin bottom by footer height */
+    background-image: linear-gradient(to right, #FFFFFF, rgb(255, 122, 89));
     margin-bottom: 60px;
 }
 
@@ -68,6 +69,7 @@ body {
     width: 100%;
     white-space: nowrap;
     line-height: 60px; /* Vertically center the text there */
+    background-color: black;
 }
 
 .logo-image {
@@ -76,4 +78,14 @@ body {
     border-radius: 50%;
     overflow: hidden;
     margin-top: -6px;
+}
+
+/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#b8e1fc+0,a9d2f3+10,90bae4+25,90bcea+37,90bff0+50,6ba8e5+51,a2daf5+83,bdf3fd+100;Blue+Gloss+%231 */
+
+button:focus {
+    outline: 0;
+}
+
+.navbar .dropdown-menu .form-control {
+    width: 200px;
 }
