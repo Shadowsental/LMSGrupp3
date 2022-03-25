@@ -1,0 +1,91 @@
+﻿@page
+@using LMSGrupp3.Areas.Identity.Pages
+@model UserModel
+@{
+    ViewData["Title"] = "User ";
+}
+<br />
+<h1>@ViewData["Title"]</h1>
+
+@{
+if (TempData["newUser"] != null)
+    {
+    <div class="alert alert-success">
+        <strong>@TempData["newUser"]</strong><br />
+        @{ if (@TempData["newUserData"] != null)
+            {
+                @TempData["newUserData"]
+            }
+        }
+    </div>
+    }
+}
+    <p>
+        <a class="btn btn-sm btn-primary" asp-area="Identity" asp-page="/Account/Create">
+            <i class="fas fa-plus"></i> Add a New User
+        </a>
+    </p>
+@{
+    if (@Model.Users != null)
+    {
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr class="tablecell">
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>E-mail</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Users)
+                {
+                    <tr onclick="window.location.href='Account/Details?userEmail=@item.Email'">
+                        <td title="Klicka för at visa detaljer för @item.Name">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td title="Klicka för at visa detaljer för @item.Name">
+                            @Html.DisplayFor(modelItem => item.Username)
+                        </td>
+                        <td title="Klicka för at visa detaljer för @item.Name">
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td title="Klicka för at visa detaljer för @item.Name">
+                            @Html.DisplayFor(modelItem => item.Role)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                @*btn btn-primary*@
+                @*<a class="" asp-area="Identity" asp-page="/Account/Edit" asp-route-userEmail="@Model.Input.Email" asp-route-returnTo="details">Redigera</a>*@
+            </div>
+        </div>
+    }
+    else
+    {
+        <div>
+            User not found
+        </div>
+    }
+}
+
+@*
+    @if (@Model.ReturnUrl != "")
+        {
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <a asp-route-returnurl="@Model.ReturnUrl">Tillbaka</a>
+        </div>
+    </div>
+    }
+*@
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
