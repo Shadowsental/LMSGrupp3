@@ -31,9 +31,12 @@ namespace LMSGrupp3
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-            
-            services.AddDbContext<ApplicationDbContext>(options =>
+                
+                });
+
+          
+
+                services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
@@ -42,6 +45,8 @@ namespace LMSGrupp3
                 
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddSingleton<IFormFile, LMSFormFile>();
+
+
            
         }
 
@@ -69,8 +74,8 @@ namespace LMSGrupp3
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
+           app.UseEndpoints(endpoints =>
+           {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Learning Management System</title>
+    <title>@ViewData["Title"]BIG UNI - Learning Management System</title>
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+       
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
@@ -17,20 +18,26 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/animate.css" />
+    
+    
 </head>
 <body>
+    
     <header>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             @*        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">*@
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/biguni.jpg" height="150" width="150"/>
+                    <img src="~/images/biguni2.jpg" height="50" width="50"/>
+                    <span id="header-tagline">High-quality online learning opportunities.</span>
                 </a>
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                   
                     <partial name="_LoginPartial" />
                     @{ if (User.IsInRole("Teacher"))
                         {
@@ -38,17 +45,17 @@
                                 <li class="nav-item">
                                     <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a>
                                 </li>
-                                @*<li class="nav-item">
+                                <li class="nav-item">
                                     <a class="nav-link" asp-area="" asp-controller="Documents" asp-action="Create">Lägg till dokument</a>
-                                </li>*@
-                                @*<li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="ActivityModels" asp-action="Index">Aktivitet</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-lin" asp-area="" asp-controller="ActivityModels" asp-action="Index">Aktivitet</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="ActivityTypes" asp-action="Index">Aktivitet Typ</a>
-                                    </li>*@
+                                        <a class="nav-link" asp-area="" asp-controller="ActivityTypes" asp-action="Index">Aktivitet Typ</a>
+                                    </li>
                                 <li class="nav-item">
-                                    @*<a class="nav-link" asp-area="Identity" asp-page="/Account/Create" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Lägg till Användare</a>*@
+                                  @*  <a class="nav-link" asp-area="Identity" asp-page="/Account/Create" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Lägg till Användare</a>*@
                                     <a class="nav-link" asp-area="Identity" asp-page="/Account/Index">User</a>
                                 </li>
 
@@ -62,7 +69,7 @@
                                     <a class="nav-link" asp-area="" asp-controller="Student" asp-action="Index">My Course</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="CourseStudents">Course Student List</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="CourseStudents">Course Class List</a>
                                 </li>
                             </ul>
                         }
@@ -71,6 +78,8 @@
             </div>
         </nav>
     </header>
+   <p></p> 
+    
     <div class="container">
        
         <main role="main" class="pb-3">
@@ -80,8 +89,8 @@
 
     <footer class="border-top footer text-muted text-center">
         <div class="container">
-            &copy; 2022 - Lexicon LMS - Alex & Mattias
-             <partial name="_CookieConsentPartial" />
+            &copy; 2022 - BIG UNI LMS Courtesy of Lexicon Sweden - Team Alex & Mattias
+      @*-     <partial name="_CookieConsentPartial" />*@
             @*- <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
         </div>
     </footer>
