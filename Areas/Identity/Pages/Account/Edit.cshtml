@@ -1,7 +1,7 @@
 ﻿@page
 @model EditUserModel
 @{
-    ViewData["Title"] = "Redigera användare";
+    ViewData["Title"] = "Edit User";
 }
 <br />
 <h1>@ViewData["Title"]</h1>
@@ -42,7 +42,7 @@
                     </div>
                     <br />
                     @*<br />
-                    <h5>Lösenord ändras bara om nytt anges</h5>
+                    <h5>Password change only when new password</h5>
                     <hr />
                     <div class="form-group">
                         <label asp-for="Input.Password"></label>
@@ -73,7 +73,7 @@
             <br>
             <div class="row">
                 <div class="col-md-4">
-                    <a asp-route-returnurl="@Model.ReturnUrl">Tillbaka</a>
+                    <a asp-route-returnurl="@Model.ReturnUrl">Go back</a>
 
                 </div>
             </div>
@@ -88,7 +88,7 @@
     {
         <div class="row">
             <div class="col-md-4">
-                Hittade ingen användare
+                Did not find a user
             </div>
         </div>
         @if (@Model.ReturnUrl != "")
@@ -96,7 +96,7 @@
             <br>
             <div class="row">
                 <div class="col-md-4">
-                    <a class="" asp-page="/Account/Index"> Tillbaka @Model.ReturnUrl</a>
+                    <a class="" asp-page="/Account/Index"> Go back @Model.ReturnUrl</a>
                 </div>
             </div>
         }
@@ -105,7 +105,7 @@
 @*ReturnUrl:  @Model.ReturnUrl*@
 <hr />
 <div>
-    <a class="btn btn-sm btn-primary" asp-page="/Account/Index"><i class="fas fa-undo-alt"></i> Tillbaka till användarna</a>
+    <a class="btn btn-sm btn-primary" asp-page="/Account/Index"><i class="fas fa-undo-alt"></i> Back to Users</a>
 </div>
 
 @section Scripts {

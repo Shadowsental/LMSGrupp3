@@ -53,34 +53,34 @@ namespace LMSGrupp3.Areas.Identity.Pages
 
         public class InputModel
         {
-            [Required(ErrorMessage = "{0} måste anges")]
-            [StringLength(30, ErrorMessage = "{0} måste vara minst {2} och högst {1} tecken långt.", MinimumLength = 3)]
-            [Display(Name = "Namn")]
+            [Required(ErrorMessage = "{0} must be specified")]
+            [StringLength(30, ErrorMessage = "{0} minimum of {2} and maximum of {1} characters.", MinimumLength = 3)]
+            [Display(Name = "Name")]
             public string Name { get; set; }
 
-            [Required(ErrorMessage = "{0} måste anges")]
+            [Required(ErrorMessage = "{0} muste be specified")]
             [EmailAddress]
-            [Display(Name = "Epost")]
+            [Display(Name = "E-mail")]
             public string Email { get; set; }
 
-            [Required(ErrorMessage = "{0} måste anges")]
-            [StringLength(100, ErrorMessage = "{0}et måste var minst {2} och högst {1} tecken långt.", MinimumLength = 6)]
+            [Required(ErrorMessage = "{0} must be specified")]
+            [StringLength(100, ErrorMessage = "{0}et minimum of {2} and maximum of {1} characters.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Lösenord")]
+            [Display(Name = "Password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Upprepa lösenord")]
-            [Compare("Password", ErrorMessage = "Lösenorden är inte lika.")]
+            [Display(Name = "Repeat Password")]
+            [Compare("Password", ErrorMessage = "Passwords Not Equal")]
             public string ConfirmPassword { get; set; }
 
-            [Required(ErrorMessage = "{0} måste anges")]
+            [Required(ErrorMessage = "{0} muste be specified")]
             [StringLength(20, MinimumLength = 1)]
-            [Display(Name = "Användartyp")]
+            [Display(Name = "Role")]
             public string Role { get; set; }
             public IEnumerable<SelectListItem> Roles { get; set; }
 
-            [Display(Name = "Koppla till kurs")]
+            [Display(Name = "Attach to Course")]
             public int CourseId { get; set; }
             public IEnumerable<SelectListItem> Courses { get; set; }
         }
@@ -146,9 +146,9 @@ namespace LMSGrupp3.Areas.Identity.Pages
                         // await _signInManager.SignInAsync(user, isPersistent: false);
                         #endregion
 
-                        if (Input.CourseId > 0)  // Koppla användare till kurs
+                        if (Input.CourseId > 0)  // Assign User to Course
                         {
-                            // Koppla användare till en kurs
+                            // Assign User to Course
                             var newCourse = new UserCourse
                             {
                                 UserId = user.Id,
@@ -163,18 +163,18 @@ namespace LMSGrupp3.Areas.Identity.Pages
                         {
                             string roll = "";
                             if (Input.Role == "Teacher")
-                                roll = "lärare";
+                                roll = "teacher";
                             else
-                                roll = "elev";
+                                roll = "student";
 
-                            TempData["newUser"] = "Skapade ny " + roll;
+                            TempData["newUser"] = "Created new " + roll;
                             TempData["newUserData"] = Input.Name + " (" + Input.Email + ")";
 
                             returnUrl = "/Identity/Account/Details?userEmail=" + Input.Email;
                         }
                         else
                         {
-                            TempData["newUserData"] = "Skapade ny elev på kursen: " + Input.Name + " (" + Input.Email + ")";
+                            TempData["newUserData"] = "Created new student to course: " + Input.Name + " (" + Input.Email + ")";
 
                             returnUrl = returnUrl + "/" + Input.CourseId;  //  courseId=2&returnUrl=/Courses/Details
                         }
@@ -188,21 +188,21 @@ namespace LMSGrupp3.Areas.Identity.Pages
                 }
             }
 
-            // Skapa data vid fel
+            // create data when error
             if (Input.CourseId > 0)
             {
-                // Bara student
+                // Only Student
                 Input.Roles = new SelectList(_roleManager.Roles.Where(r => r.Name == "Student").ToList(), "Name", "Name", "Student");  // , "Student"
-                // Bara rätt kurs i listan
+                // Only correct course in list
                 Input.Courses = new SelectList(_context.Course.Where(c => c.Id == Input.CourseId).ToList(), "Id", "Name", Input.CourseId);
-                // Kursens namn
+                // Course Name
                 CourseName = _context.Course.Where(c => c.Id == Input.CourseId).SingleOrDefault().Name.ToString();
             }
             else
             {
-                // Lista roller
+                //List Roles
                 Input.Roles = new SelectList(_roleManager.Roles, "Name", "Name");
-                // Lista kurser
+                // List Courses
                 Input.Courses = new SelectList(_context.Course.ToList(), "Id", "Name", Input.CourseId);
             }
 

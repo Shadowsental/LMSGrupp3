@@ -112,7 +112,7 @@ namespace LMSGrupp3.Controllers
                 ViewBag.Result = "Course created successfully!";
                 _context.Add(course);
                 await _context.SaveChangesAsync();
-                //return RedirectToAction("TeacherHome", "AppUsers");
+                //return RedirectToAction("TeacherHome", "Users");
             }
             return View();
         }

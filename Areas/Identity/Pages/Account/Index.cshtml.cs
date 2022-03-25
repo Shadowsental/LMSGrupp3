@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using LMSGrupp3.Data;
 
 
 namespace LMSGrupp3.Areas.Identity.Pages
@@ -51,16 +52,16 @@ namespace LMSGrupp3.Areas.Identity.Pages
 
         public class InputModel
         {
-            [Display(Name = "Namn")]
+            [Display(Name = "Name")]
             public string Name { get; set; }
 
-            [Display(Name = "Användarnamn")]
+            [Display(Name = "Username")]
             public string Username { get; set; }
 
-            [Display(Name = "Epost")]
+            [Display(Name = "E-mail")]
             public string Email { get; set; }
 
-            [Display(Name = "Användartyp")]
+            [Display(Name = "Role")]
             public string Role { get; set; }
 
 
@@ -68,16 +69,16 @@ namespace LMSGrupp3.Areas.Identity.Pages
 
         public class UserViewModel
         {
-            [Display(Name = "Namn")]
+            [Display(Name = "Name")]
             public string Name { get; set; }
 
-            [Display(Name = "Användarnamn")]
+            [Display(Name = "Username")]
             public string Username { get; set; }
 
-            [Display(Name = "Epost")]
+            [Display(Name = "E-mail")]
             public string Email { get; set; }
 
-            [Display(Name = "Användartyp")]
+            [Display(Name = "Role")]
             public string Role { get; set; }
         }
 

@@ -52,36 +52,36 @@ namespace LMSGrupp3.Areas.Identity.Pages
 
         public class InputModel
         {
-            [Required(ErrorMessage = "{0} måste anges")]
-            [StringLength(30, ErrorMessage = "{0} måste vara minst {2} och högst {1} tecken långt.", MinimumLength = 3)]
-            [Display(Name = "Namn")]
+            [Required(ErrorMessage = "{0} must be specified")]
+            [StringLength(30, ErrorMessage = "{0} minimum of {2} and maximum of {1} characters.", MinimumLength = 3)]
+            [Display(Name = "Name")]
             public string Name { get; set; }
 
-            [Required(ErrorMessage = "{0} måste anges")]
+            [Required(ErrorMessage = "{0} must be specified")]
             [EmailAddress]
-            [Display(Name = "Epost")]
+            [Display(Name = "E-mail")]
             public string Email { get; set; }
 
             //=== PASSWORD AVSTÄNGD ===
             //// [Required(ErrorMessage = "{0} måste anges")]
             //[StringLength(100, ErrorMessage = "{0}et måste var minst {2} och högst {1} tecken långt.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Lösenord")]
+            [Display(Name = "Password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Upprepa lösenord")]
-            [Compare("Password", ErrorMessage = "Lösenorden är inte lika.")]
+            [Display(Name = "Repeat password")]
+            [Compare("Password", ErrorMessage = "Passwords not equal.")]
             public string ConfirmPassword { get; set; }
 
-            [Required(ErrorMessage = "{0} måste anges")]
-            [Display(Name = "Användartyp")]
+            [Required(ErrorMessage = "{0} must be specified")]
+            [Display(Name = "Role")]
             public string Role { get; set; }
 
             [Display(Name = "Select")]
             public IEnumerable<SelectListItem> Roles { get; set; }
 
-            [Display(Name = "Koppla till kurs")]
+            [Display(Name = "Assign to course")]
             public int CourseId { get; set; }
 
             public SelectList CourseList { get; set; }
@@ -167,7 +167,7 @@ namespace LMSGrupp3.Areas.Identity.Pages
 
             if (Input.Email != user.Email)
             {
-                memEmail = Input.Email;  // lagra email för retur
+                memEmail = Input.Email;  // e-mail to return
                 user.UserName = Input.Email;
                 user.Email = Input.Email;
                 changedUser = true;
@@ -215,22 +215,22 @@ namespace LMSGrupp3.Areas.Identity.Pages
 
                 if (changeCourse)
                 {
-                    if (actCourse != null && (Input.CourseId != actCourse.CourseId))  // ändra/radera elev/kurs
+                    if (actCourse != null && (Input.CourseId != actCourse.CourseId))  //edit/delete student/course
                         CourseHandling(actCourse, user.Id, Input.CourseId);
-                    else if (actCourse == null && Input.CourseId > 0)  // koppla elev till kurs
+                    else if (actCourse == null && Input.CourseId > 0)  // assign student to course
                         CourseHandling(actCourse, user.Id, Input.CourseId);
                 }
 
                 if (changedRole)
                 {
-                    // Koppla User från Role
+                    // assign user from role
                     updateRole = await _userManager.RemoveFromRoleAsync(user, orgRole);
                     if (!updateRole.Succeeded)
                     {
                         throw new Exception(string.Join("\n", updateRole.Errors));
                     }
 
-                    // Koppla User till ny Role
+                    // assignt user to role
                     updateRole = await _userManager.AddToRoleAsync(user, Input.Role);
                     if (!updateRole.Succeeded)
                     {
@@ -238,7 +238,7 @@ namespace LMSGrupp3.Areas.Identity.Pages
                     }
                 }
 
-                //if (changePassword)  //--- AVSTÄNGD PGA OTILLRÄCKLIG INDATAKONTROLL ---//
+                //if (changePassword)  //---  ---//
                 //{
                 //    //if (PasswordValidator != null)
                 //    //{
@@ -258,12 +258,12 @@ namespace LMSGrupp3.Areas.Identity.Pages
                 //    var resultPw = await _userManager.ResetPasswordAsync(user, token, Input.Password);
                 //}
 
-                //##### FELMEDDELANDE??? #####
+                //#####ERROR MESSAGE??? #####
                 // ???
                 // ???
 
-                // TempData["newUser"] = "Ändrade " + Input.Name;  //  "Skapade användaren '" + Input.Name + "' (" + Input.Role + ")";
-                TempData["newUser"] = "Uppdaterade användaren ";
+                // TempData["newUser"] = "Changed " + Input.Name;  //  "Created User '" + Input.Name + "' (" + Input.Role + ")";
+                TempData["newUser"] = "Updated User ";
                 TempData["newUserData"] = "";  // Input.Name + " (" + Input.Email + ")";
 
                 if (returnUrl == "")
@@ -272,9 +272,9 @@ namespace LMSGrupp3.Areas.Identity.Pages
                 }
             }
 
-            //--- Bygg utdata vid reload av formuläret ---
+            //--- Build Outdata with update form ---
 
-            // Roll/Roller
+            // Role/Roles
             user = await _userManager.FindByIdAsync(user.Id.ToString());
             var role = "";
 
@@ -285,7 +285,7 @@ namespace LMSGrupp3.Areas.Identity.Pages
             }
             Input.Roles = new SelectList(_roleManager.Roles, "Name", "Name", role);
 
-            // Kurs/Kurser
+            // Course/Course
             var actCourse2 = _context.UserCourse.FirstOrDefault(c => c.UserId == user.Id);
             if (actCourse2 != null)
             {
@@ -317,7 +317,7 @@ namespace LMSGrupp3.Areas.Identity.Pages
                         CourseId = newCourseId
                     };
 
-                    _context.Add(newCourse);  // koppla till kurs
+                    _context.Add(newCourse);  // Assign to course
                     _context.SaveChanges();
                 }
                 else
@@ -326,7 +326,7 @@ namespace LMSGrupp3.Areas.Identity.Pages
                     _context.SaveChanges();
 
                     if (newCourseId > 0)
-                    {  // bara update
+                    {  // only update
                         actCourse.CourseId = newCourseId;
                         _context.Add(actCourse);
                         _context.SaveChanges();

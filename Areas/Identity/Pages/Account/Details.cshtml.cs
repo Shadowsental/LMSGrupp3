@@ -54,17 +54,17 @@ namespace LMSGrupp3.Areas.Identity.Pages
 
         public class InputModel
         {
-            [Display(Name = "Namn")]
+            [Display(Name = "Name")]
             public string Name { get; set; }
 
-            [Display(Name = "Epost")]
+            [Display(Name = "E-mail")]
             public string Email { get; set; }
 
-            [Display(Name = "Kurs")]
+            [Display(Name = "Course")]
             public string CourseName { get; set; }
 
-            [Required(ErrorMessage = "{0} måste anges")]
-            [Display(Name = "Användartyp")]
+            [Required(ErrorMessage = "{0} must be specified")]
+            [Display(Name = "Role")]
             public string Role { get; set; }
         }
 
