@@ -1,108 +1,13 @@
-a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-    
-}
-
-a.nav-link {
-    font-size: 18px;
-    color: #00ff21;
-    font-family: Courier New, Courier, monospace;
-    font-style: italic;
-}
-
-/* Provide sufficient contrast against white background */
-a {
-    color: #0366d6;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-   
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-.border-top {
-    border-top: 1px solid #e5e5e5;
-}
-
-.border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-    font-size: 1rem;
-    line-height: inherit;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-    font-size: 14px;
+/*add css Code*/
+html{
     height: 100%;
-    position: relative;
-    min-height: 100%;
+} 
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(#141e30, #243b55);
 }
-
-body {
-    /* Margin bottom by footer height */
-    background-image: linear-gradient(to right, #c6ffdd, #fbd786, #f7797d);
-    margin-bottom: 60px;
-    
-}
-
-   
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
-    background-color: #786666;
-    color: white;
-}
-
-.logo-image {
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-top: -6px;
-}
-
-/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#b8e1fc+0,a9d2f3+10,90bae4+25,90bcea+37,90bff0+50,6ba8e5+51,a2daf5+83,bdf3fd+100;Blue+Gloss+%231 */
-
-button:focus {
-    outline: 0;
-}
-
-.navbar .dropdown-menu .form-control {
-    width: 200px;
-}
-
-
-
 .login-box{
     position: absolute;
     top: 50%;
@@ -251,10 +156,4 @@ button:focus {
       bottom: 100%;
     }
   }
-
-.fb-img {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+  

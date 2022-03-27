@@ -10,7 +10,7 @@ using LMSGrupp3.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Lexicon_LMS.Controllers
+namespace LMSGrupp3.Controllers
 {
     [Authorize(Roles = "Teacher,Student")]
     public class StudentController : Controller

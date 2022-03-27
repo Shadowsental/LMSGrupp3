@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LMSGrupp3.Data;
 using LMSGrupp3.Models.Entities;
 
-namespace Lexicon_LMS
+namespace LMSGrupp3.Controllers
 {
     public class ActivityTypesController : Controller
     {
