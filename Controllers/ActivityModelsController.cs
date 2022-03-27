@@ -76,8 +76,8 @@ namespace LMSGrupp3
                                   
 
                
-                    ViewData["modTimeStart"] = module.StartTime.ToString("dd/MM hh:mm", ci);
-                    ViewData["modTimeEnd"] = module.EndTime.ToString("dd/MM hh:mm", ci);
+                    ViewData["modTimeStart"] = module.StartTime.ToString("dd/MM hh:mm");
+                    ViewData["modTimeEnd"] = module.EndTime.ToString("dd/MM hh:mm");
                 
                     ViewData["startTime"] = startTime.ToString("yyyy-dd-MM hh:mm");
                     ViewData["endTime"] = endTime.ToString("yyyy-dd-MM hh:mm");
