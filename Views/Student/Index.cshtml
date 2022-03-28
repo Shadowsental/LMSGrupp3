@@ -1,7 +1,7 @@
 ﻿@model LMSGrupp3.Models.Entities.Course
 
 @{
-    ViewData["Title"] = "StudentView";
+    ViewData["Title"] = "Student View";
     }
 
 @{ if (Model != null)
@@ -40,20 +40,32 @@
 
                         var moduleStart = item.StartTime.ToString("dd/MM");  // var moduleStart = String.Format("{0:d/M/yyyy HH:mm:ss}", item.StartTime);
                         var moduleEnd = item.EndTime.ToString("dd/MM");      // var moduleEnd = item.EndTime.ToString("yyddMM hh:mm", ci);
+                        var moduleDescription = item.Description.ToString();
+                        var moduleActivities = item.ModuleActivities;
 
                     }
                     @*<div class="col-md-9 col-sm-8">*@
-                    <a href="#activities-@item.Id" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"
-                       class="col-md-9 col-sm-8 stuModuleLink" style="" onclick="ToggleDocs(@item.Id);">
+                    <div class="card">
+                    <div class="card-block">
+                    @*<a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a>*@
+                    <h4><a asp-controller="ActivityModels" asp-action="Index" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"
+                       class="col-md-3 col-sm-4 stuModuleLink" style="" onclick="ToggleDocs(@item.Id);">
                         <i id="Ico-@item.Id" class="fa fa-plus stuModuleIcon"></i> @Html.DisplayFor(modelItem => item.Name)
                     </a>
+                    </h4>
                     @*</div>*@
 
+                    <a href="#activities-@item.Id" class="col-md-3 col-sm-4 text-left" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample" style="">
+                    @moduleDescription
+                    </a>
+
                     @*<div class="col-md-3 col-sm-4 col- text-right stuModuleDate">*@
-                    <a href="#activities-@item.Id" class="col-md-3 col-sm-4 col- text-right stuModuleDate" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample" style="">
+                    <a href="#activities-@item.Id" class="col-md-3 col-sm-4 text-right stuModuleDate" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample" style="">
                         @moduleStart - @moduleEnd
                     </a>
-                    @*</div>*@
+                    </div>
+                    <a asp-controller="Documents" asp-action="Create">Upload Document</a>
+                    </div>
 
                     <div id="Docs-@item.Id" class="col-sm-12" style="margin-top:5px; display:none;">
                         @*stuModuleDocHidden*@

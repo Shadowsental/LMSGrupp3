@@ -45,6 +45,7 @@
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="Models\ViewModels\Student\" />
+    <Folder Include="wwwroot\files\" />
   </ItemGroup>
 
   <ItemGroup>
