@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
@@ -42,25 +43,30 @@ namespace LMSGrupp3.Controllers
             doc.Timestamp = timestamp;
 
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
-            doc.ApplicationUserId = currentUser.Id.ToString();
+            doc.UserId = currentUser.Id.ToString();
             return View(doc);
         }
 
         //POST: Documents/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Timestamp,ApplicationUserId,CourseId,ModuleId,ActivityId")] Document document)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Timestamp,UserId,CourseId,ModuleId,ActivityId")] Document document)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(document);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(document);
+            
+                if (ModelState.IsValid) {
+                    _context.Add(document);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["ActivityId"] = new SelectList(_context.ActivityModel, "Id", "Id", document.ActivityId);
+                ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", document.UserId);
+                ViewData["CourseId"] = new SelectList(_context.Course, "Id", "Id", document.CourseId);
+                ViewData["ModuleId"] = new SelectList(_context.Module, "Id", "Id", document.ModuleId);
+                return View(document);
+            
         }
 
-        [HttpPost]
+            [HttpPost]
         public async Task<IActionResult> UploadFile(IFormFile file, DocumentFileViewModel dvm)
         {
             if (file == null || file.Length == 0)
@@ -81,7 +87,7 @@ namespace LMSGrupp3.Controllers
                 DateTime timestamp = DateTime.Now;
                 doc.Name = dvm.Name;
                 doc.Description = dvm.Description;
-                doc.UserId = dvm.ApplicationUserId;
+                doc.UserId = dvm.UserId;
                 doc.FileName = dvm.FileName;
                 doc.Timestamp = dvm.Timestamp;
                 doc.CourseId = dvm.CourseId;
