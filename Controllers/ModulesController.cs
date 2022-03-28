@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LMSGrupp3
+namespace LMSGrupp3.Controllers
 {
     public class ModulesController : Controller
     {
