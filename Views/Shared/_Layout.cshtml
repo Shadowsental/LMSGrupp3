@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using LMSGrupp3.Models.Entities
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@inject IEnumerable<Course> Course
+
+<!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="~/css/site.css">
 
@@ -41,30 +47,34 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                    
                     <partial name="_LoginPartial" />
-                    @{ if (User.IsInRole("Teacher"))
+                     <ul class="navbar-nav flex-grow-1">
+                         @if (User.IsInRole("Teacher"))
                         {
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index" >Courses </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Documents" asp-action="Create">Add-Document  </a>
-                                </li>
-                                <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="ActivityModels" asp-action="Index">Activity  </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="ActivityTypes" asp-action="Index">Activity-Type  </a>
-                                    </li>
-                                <li class="nav-item">
-                                  @*  <a class="nav-link" asp-area="Identity" asp-page="/Account/Create" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Lägg till Användare</a>*@
-                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Index">User  </a>
-                                </li>
-
-                            </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Create" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Add+User </a>
+                              </li> 
+                               @* <li class="nav-item">
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Index" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">User </a>
+                            </li>*@
+                            
+                                 <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a>
+                                  </li> 
+                                    <li class="nav-item">  
+                                    <a class="nav-link" asp-area="" asp-controller="Modules" asp-action="Index">Modules</a>
+                                   </li> 
+                                    <li class="nav-item"> 
+                                    <a class="nav-link" asp-area="" asp-controller="ActivityModels" asp-action="Index">Activities</a>
+                                   </li> 
+                                    <li class="nav-item"> 
+                                    <a class="nav-link" asp-area="" asp-controller="ActivityTypes" asp-action="Index">Activity-Types</a>
+                                  </li> 
+                                    <li class="nav-item"> 
+                                    <a class="nav-link" asp-area="" asp-controller="Documents" asp-action="Index">Documents</a>
+                                    </li> 
+                               
                         }
-                    }
-                    @{ if (User.IsInRole("Student"))
+                        else if (User.IsInRole("Student"))
                         {
                             <ul class="navbar-nav flex-grow-1">
                                 <li class="nav-item">
@@ -75,7 +85,9 @@
                                 </li>
                             </ul>
                         }
-                    }
+                        else
+                        {
+                        }
                 </div>
             </div>
         </nav>
