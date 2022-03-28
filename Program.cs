@@ -20,7 +20,6 @@ namespace LMSGrupp3
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<ApplicationDbContext>();
-                context.Database.Migrate();
 
                 var config = host.Services.GetRequiredService<IConfiguration>();
 
