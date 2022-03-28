@@ -73,15 +73,11 @@ namespace LMSGrupp3
                     var startTime = module.StartTime;  //.ToString("yyyy-dd-MM hh:mm");
                     var endTime = module.StartTime;  //.ToString("yyyy-dd-MM hh:mm");
 
-                    // method
-                    CultureInfo culture = CultureInfo.CreateSpecificCulture("sv-SE");  // en-US
-                    CultureInfo ci = CultureInfo.InvariantCulture;
-
-                    
+                                  
 
                
-                    ViewData["modTimeStart"] = module.StartTime.ToString("dd/MM hh:mm", ci);
-                    ViewData["modTimeEnd"] = module.EndTime.ToString("dd/MM hh:mm", ci);
+                    ViewData["modTimeStart"] = module.StartTime.ToString("dd/MM hh:mm");
+                    ViewData["modTimeEnd"] = module.EndTime.ToString("dd/MM hh:mm");
                 
                     ViewData["startTime"] = startTime.ToString("yyyy-dd-MM hh:mm");
                     ViewData["endTime"] = endTime.ToString("yyyy-dd-MM hh:mm");

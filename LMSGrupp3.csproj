@@ -19,11 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Identity\Pages\Error.cshtml.cs" />
+    <Compile Remove="Areas\Identity\Pages\Account\Register.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\Identity\Pages\Error.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\Index.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\Register.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,7 +52,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Error.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Identity\Pages\Account\Index.cshtml" />
   </ItemGroup>
 
 </Project>

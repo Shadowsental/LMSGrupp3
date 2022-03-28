@@ -11,12 +11,24 @@ namespace LMSGrupp3.Models.Entities
 		[Key]
 		[Required]
 		public int Id { get; set; }
-		public string Name { get; set; }
-	public string Description { get; set; }
-	public DateTime StartDate { get; set; }
 
-		//NavProp
+		[Required]
+		[Display(Name = "Name")]
+		public string Name { get; set; }
+
+		[Required]
+		[Display(Name = "Course Description")]
+		public string Description { get; set; }
+
+		[Display(Name = "Startdatum")]
+		[DataType(DataType.Date)]
+		public DateTime StartDate { get; set; }
+
+
+		[Display(Name = "Modules")]
 		public ICollection<Module> Modules { get; set; }
+
+		[Display(Name = "User")]
 		public ICollection<UserCourse> Users { get; set; }
 		
 	}

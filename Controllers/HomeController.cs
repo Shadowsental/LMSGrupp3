@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using LMSGrupp3.Models;
+using LMSGrupp3.Models.Entities;
 
 namespace LMSGrupp3.Controllers
 {
@@ -12,7 +12,7 @@ namespace LMSGrupp3.Controllers
     {
         public IActionResult Index()
         {
-            return View("~/Views/Shared/_LoginPartial.cshtml"); 
+            return View();
         }
 
         public IActionResult Privacy()

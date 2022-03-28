@@ -1,8 +1,8 @@
 using System;
-using LMSGrupp3.Models;
+using LMSGrupp3.Models.Entities;
 
 
-namespace LMSGrupp3.Models
+namespace LMSGrupp3.Models.Entities
 {
     public class ErrorViewModel
     {

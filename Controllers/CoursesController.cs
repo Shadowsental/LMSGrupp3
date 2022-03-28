@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using LMSGrupp3.ViewModels.Teacher;
+
 
 namespace LMSGrupp3.Controllers
 {
@@ -84,10 +86,10 @@ namespace LMSGrupp3.Controllers
         }
 
         // GET: Courses/Create
+        [Authorize(Roles = "Teacher")]
         public IActionResult Create()
         {
-            var course = new Course { StartDate = DateTime.UtcNow.Date };
-            return View(course);
+            return View();
         }
 
         // POST: Courses/Create
@@ -95,15 +97,24 @@ namespace LMSGrupp3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate")] Course course)
+        [Authorize(Roles = "Teacher")]
+        public async Task<IActionResult> Create(CreateCourseViewModel courseModel)
         {
             if (ModelState.IsValid)
             {
+                var course = new Course
+                {
+                    Name = courseModel.Name,
+                    Description = courseModel.Description,
+                    StartDate = courseModel.StartDate
+                };
+
+                ViewBag.Result = "Course created successfully!";
                 _context.Add(course);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction("TeacherHome", "Users");
             }
-            return View(course);
+            return View();
         }
 
         // GET: Courses/Edit/5
