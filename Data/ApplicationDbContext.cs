@@ -33,7 +33,7 @@ namespace LMSGrupp3.Data
 
         public DbSet<ActivityType> ActivityType { get; set; }
 
-        public DbSet<LMSGrupp3.Models.Entities.Document> Document { get; set; }
+        public DbSet<Document> Document { get; set; }
 
     }
 }

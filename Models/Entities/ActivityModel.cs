@@ -37,6 +37,7 @@ namespace LMSGrupp3.Models.Entities
 		[Display(Name = "Desciption of Activity")]
 		public string Description { get; set; }
 
+		public ICollection<Document> Documents { get; set; }
 
 	}
 }

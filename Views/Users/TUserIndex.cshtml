@@ -1,0 +1,30 @@
+﻿@model IEnumerable<LMSGrupp3.Models.ViewModels.UserListViewModel>
+
+@{
+    ViewData["Title"] = "User Accounts";
+}
+
+
+<div id="row-add-course" class="row justify-content-center align-items-center">
+    <div class="col-sm-12 justify-content-center">
+        <h1>User Accounts <a asp-controller="Users" asp-action="CreateUser"><img id="btn-create" src="/icons/create.svg" alt="Alternate Text" /></a></h1>
+    </div>
+</div>
+
+    <div class="container cont-section">
+        <h2>Students</h2>
+        <div class="container p-3 my-3 border">
+            <table id="userindex" class="table table-sm">
+                <partial name="StudentListPartial" />
+            </table>
+        </div>
+    </div>
+    <div class="container cont-section">
+        <h2>Teachers</h2>
+
+        <div class="container  p-3 my-3 border">
+            <table id="userindex" class="table table-sm">
+                <partial name="TeacherListPartial" />
+            </table>
+        </div>
+    </div>

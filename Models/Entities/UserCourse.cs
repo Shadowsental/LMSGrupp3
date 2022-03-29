@@ -9,6 +9,8 @@ namespace LMSGrupp3.Models.Entities
         //public int Id { get; set; }
 
     //    [ForeignKey("CourseId")]
+      
+
         public int CourseId { get; set; }
 
         [ForeignKey("UserId")]
@@ -16,5 +18,6 @@ namespace LMSGrupp3.Models.Entities
 
         public User User { get; set; }
         public Course Course { get; set; }
+
     }
 }

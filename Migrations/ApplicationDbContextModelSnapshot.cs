@@ -56,7 +56,7 @@ namespace LMSGrupp3.Migrations
 
                     b.HasIndex("ModuleId");
 
-                    b.ToTable("ActivityModel", (string)null);
+                    b.ToTable("ActivityModel");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.ActivityType", b =>
@@ -77,7 +77,7 @@ namespace LMSGrupp3.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ActivityType", (string)null);
+                    b.ToTable("ActivityType");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Course", b =>
@@ -104,7 +104,7 @@ namespace LMSGrupp3.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Course", (string)null);
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Document", b =>
@@ -118,6 +118,9 @@ namespace LMSGrupp3.Migrations
                     b.Property<int?>("ActivityId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ActivityModelId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
@@ -129,9 +132,6 @@ namespace LMSGrupp3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsCompleted")
-                        .HasColumnType("bit");
-
                     b.Property<int?>("ModuleId")
                         .HasColumnType("int");
 
@@ -142,16 +142,13 @@ namespace LMSGrupp3.Migrations
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("UploadTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ActivityId");
+                    b.HasIndex("ActivityModelId");
 
                     b.HasIndex("CourseId");
 
@@ -159,7 +156,7 @@ namespace LMSGrupp3.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Document", (string)null);
+                    b.ToTable("Document");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Module", b =>
@@ -170,7 +167,7 @@ namespace LMSGrupp3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CourseId")
+                    b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -191,7 +188,7 @@ namespace LMSGrupp3.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Module", (string)null);
+                    b.ToTable("Module");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.User", b =>
@@ -275,7 +272,7 @@ namespace LMSGrupp3.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("UserCourse", (string)null);
+                    b.ToTable("UserCourse");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -421,55 +418,41 @@ namespace LMSGrupp3.Migrations
                         .WithMany()
                         .HasForeignKey("ActivityTypeId");
 
-                    b.HasOne("LMSGrupp3.Models.Entities.Module", "Module")
+                    b.HasOne("LMSGrupp3.Models.Entities.Module", null)
                         .WithMany("ModuleActivities")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ActivityType");
-
-                    b.Navigation("Module");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Document", b =>
                 {
-                    b.HasOne("LMSGrupp3.Models.Entities.ActivityModel", "Activity")
+                    b.HasOne("LMSGrupp3.Models.Entities.ActivityModel", null)
                         .WithMany("Documents")
-                        .HasForeignKey("ActivityId");
+                        .HasForeignKey("ActivityModelId");
 
-                    b.HasOne("LMSGrupp3.Models.Entities.Course", "Course")
-                        .WithMany()
+                    b.HasOne("LMSGrupp3.Models.Entities.Course", null)
+                        .WithMany("Documents")
                         .HasForeignKey("CourseId");
 
-                    b.HasOne("LMSGrupp3.Models.Entities.Module", "Module")
-                        .WithMany()
+                    b.HasOne("LMSGrupp3.Models.Entities.Module", null)
+                        .WithMany("Documents")
                         .HasForeignKey("ModuleId");
 
-                    b.HasOne("LMSGrupp3.Models.Entities.User", "User")
-                        .WithMany()
+                    b.HasOne("LMSGrupp3.Models.Entities.User", null)
+                        .WithMany("Documents")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Activity");
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Module");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Module", b =>
                 {
-                    b.HasOne("LMSGrupp3.Models.Entities.Course", "Course")
+                    b.HasOne("LMSGrupp3.Models.Entities.Course", null)
                         .WithMany("Modules")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
+                        .HasForeignKey("CourseId");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.UserCourse", b =>
@@ -549,6 +532,8 @@ namespace LMSGrupp3.Migrations
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Course", b =>
                 {
+                    b.Navigation("Documents");
+
                     b.Navigation("Modules");
 
                     b.Navigation("Users");
@@ -556,12 +541,16 @@ namespace LMSGrupp3.Migrations
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.Module", b =>
                 {
+                    b.Navigation("Documents");
+
                     b.Navigation("ModuleActivities");
                 });
 
             modelBuilder.Entity("LMSGrupp3.Models.Entities.User", b =>
                 {
                     b.Navigation("Courses");
+
+                    b.Navigation("Documents");
                 });
 #pragma warning restore 612, 618
         }

@@ -5,7 +5,7 @@
 @inject IEnumerable<Course> Course
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <link rel="stylesheet" href="~/css/site.css">
 
 <head>
@@ -35,9 +35,9 @@
         <nav class="navbar navbar-expand-sm navbar-dark bg-secondary">
             @*        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">*@
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand" asp-area="" asp-controller="Users" asp-action="Index">
                     <img src="~/images/biguni2.jpg" height="50" width="50"/>
-                    <span id="header-tagline">The Best Learning Platform</span>
+                    <span id="header-tagline">Open Source Learning Platform</span>
                 </a>
                 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -50,14 +50,21 @@
                      <ul class="navbar-nav flex-grow-1">
                          @if (User.IsInRole("Teacher"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Create" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Add+User </a>
-                              </li> 
+                           @*<li class="nav-item">
+                               <a class="nav-link" asp-area="Identity" asp-page="/Account/Index">Add+User </a>
+                              </li> *@
                                @* <li class="nav-item">
                                 <a class="nav-link" asp-area="Identity" asp-page="/Account/Index" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">User </a>
                             </li>*@
-                            
-                                 <li class="nav-item">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="THome">Courses</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="TUserIndex">Users</a>
+                            </li>
+
+
+                              @*   <li class="nav-item">
                                     <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a>
                                   </li> 
                                     <li class="nav-item">  
@@ -71,7 +78,17 @@
                                   </li> 
                                     <li class="nav-item"> 
                                     <a class="nav-link" asp-area="" asp-controller="Documents" asp-action="Index">Documents</a>
-                                    </li> 
+                                    </li> *@
+                                     <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Lists</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-controller="Courses" asp-action="Index">Courses</a>
+                                    <a class="dropdown-item" asp-controller="Modules" asp-action="Index">Modules</a>
+                                    <a class="dropdown-item" asp-controller="ActivityModels" asp-action="Index">Activities</a>
+                                    <a class="dropdown-item" asp-controller="ActivityTypes" asp-action="Index">Activity Types</a>
+                                    <a class="dropdown-item" asp-controller="Documents" asp-action="Index">Documents</a>
+                                </div>
+                            </li>
                                
                         }
                         else if (User.IsInRole("Student"))

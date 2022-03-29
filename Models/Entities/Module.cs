@@ -35,9 +35,9 @@ namespace LMSGrupp3.Models.Entities
         [Display(Name = "Activity")]
         public ICollection<ActivityModel> ModuleActivities { get; set; }
 
-
+        public ICollection<Document> Documents { get; set; }
         // Navigational reference 
         [ForeignKey("CourseId")]
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
     }
 }

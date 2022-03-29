@@ -16,7 +16,7 @@ using System.Linq;
 using LMSGrupp3.Data;
 
 
-namespace LMSGrupp3.Areas.Identity.Pages
+namespace LMSGrupp3.Areas.Identity.Pages.Account
 {
 
     [Authorize(Roles = "Teacher")]
@@ -43,12 +43,12 @@ namespace LMSGrupp3.Areas.Identity.Pages
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel? Input { get; set; }
 
-        public string ReturnUrl { get; set; }
-        public object ViewBag { get; private set; }
+        public string? ReturnUrl { get; set; }
+        public object? ViewBag { get; private set; }
 
-        public IEnumerable<Users_in_Role_ViewModel> Users { get; set; }
+        public IEnumerable<Users_in_Role_ViewModel>? Users { get; set; }
 
         public class InputModel
         {

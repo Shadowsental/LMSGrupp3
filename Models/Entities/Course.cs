@@ -28,8 +28,12 @@ namespace LMSGrupp3.Models.Entities
 		[Display(Name = "Modules")]
 		public ICollection<Module> Modules { get; set; }
 
+		//	[Display(Name = "User")]
+		//	public ICollection<UserCourse> Users { get; set; }
 		[Display(Name = "User")]
 		public ICollection<UserCourse> Users { get; set; }
-		
+
+		public ICollection<Document> Documents { get; set; }
+
 	}
 }

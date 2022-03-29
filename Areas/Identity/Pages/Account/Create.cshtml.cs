@@ -43,13 +43,13 @@ namespace LMSGrupp3.Areas.Identity.Pages
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel? Input { get; set; }
 
-        public string ReturnUrl { get; set; }
-        public object ViewBag { get; private set; }
+        public string? ReturnUrl { get; set; }
+        public object? ViewBag { get; private set; }
 
-        public string CourseName { get; set; }
-        //public string UserRole { get; set; }
+        public string? CourseName { get; set; }
+        public string? UserRole { get; set; }
 
         public class InputModel
         {

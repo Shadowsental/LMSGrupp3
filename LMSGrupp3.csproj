@@ -9,22 +9,20 @@
 
   <ItemGroup>
     <Compile Remove="Extensions\**" />
-    <Compile Remove="Views\Users\**" />
     <Content Remove="Extensions\**" />
-    <Content Remove="Views\Users\**" />
     <EmbeddedResource Remove="Extensions\**" />
-    <EmbeddedResource Remove="Views\Users\**" />
     <None Remove="Extensions\**" />
-    <None Remove="Views\Users\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Areas\Identity\Pages\Account\Register.cshtml.cs" />
+    <Compile Remove="Controllers\StudentController.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Areas\Identity\Pages\Account\Index.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\Register.cshtml" />
+    <Content Remove="Views\Users\Index_old.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,7 +42,8 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
-    <Folder Include="Models\ViewModels\Student\" />
+    <Folder Include="Models\ViewModels\Document\" />
+    <Folder Include="ViewModels\Teacher\" />
   </ItemGroup>
 
   <ItemGroup>

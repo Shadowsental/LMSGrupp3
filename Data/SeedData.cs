@@ -133,8 +133,8 @@ namespace LMSGrupp3
 
                     // Seed UserCourse
                     if (context.UserCourse.Count() == 0)
-                    {
-                        var courseIds = context.Course.Where(c => c.Name == ".NET").Select(a => a.Id).ToArray();
+                   {
+                      var courseIds = context.Course.Where(c => c.Name == ".NET").Select(a => a.Id).ToArray();
                         var userIds = context.Users.Select(a => a.Id).ToArray();
 
                         var userCourses = new List<UserCourse>();
@@ -157,7 +157,7 @@ namespace LMSGrupp3
                         var courseIds = context.Course.Where(c => c.Name == ".NET").Select(a => a.Id).ToArray();
                         var modules = new List<Module>();
                         modules.Add(new Module { Name = "C#", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "C# 7 (Polymorphism, Generics, Linq)", StartTime = DateTime.Parse("2021-11-26"), EndTime = DateTime.Parse("2021-12-14") });
-                        modules.Add(new Module { Name = "Testing", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Unit Testing etc.", StartTime = DateTime.Parse("2021-12-17"), EndTime = DateTime.Parse("2021-01-02") });
+                        modules.Add(new Module { Name = "Testing", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Unit Testing etc.", StartTime = DateTime.Parse("2021-12-17"), EndTime = DateTime.Parse("2022-01-02") });
                         modules.Add(new Module { Name = "Web", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "HTML5, CSS3, JavaScript.", StartTime = DateTime.Parse("2021-01-03"), EndTime = DateTime.Parse("2021-01-14") });
                         modules.Add(new Module { Name = "MVC", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "ASP.NET MVC Core.", StartTime = DateTime.Parse("2021-01-15"), EndTime = DateTime.Parse("2021-01-30") });
                         modules.Add(new Module { Name = "Database", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Entity framework & SQL.", StartTime = DateTime.Parse("2021-01-31"), EndTime = DateTime.Parse("2021-02-08") });

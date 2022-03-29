@@ -20,7 +20,7 @@ namespace LMSGrupp3.ViewModels
         public DateTime Timestamp { get; set; }
 
         [Display(Name = "Användare")]
-        public string ApplicationUserId { get; set; }
+        public string UserId { get; set; }
 
         [Display(Name = "Kurs")]
         public int? CourseId { get; set; }

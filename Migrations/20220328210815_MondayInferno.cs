@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LMSGrupp3.Migrations
 {
-    public partial class InitialSeed : Migration
+    public partial class MondayInferno : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -194,7 +194,7 @@ namespace LMSGrupp3.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CourseId = table.Column<int>(type: "int", nullable: false)
+                    CourseId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -203,8 +203,7 @@ namespace LMSGrupp3.Migrations
                         name: "FK_Module_Course_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Course",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -238,11 +237,11 @@ namespace LMSGrupp3.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ActivityTypeId = table.Column<int>(type: "int", nullable: true),
+                    ModuleId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StopDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModuleId = table.Column<int>(type: "int", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -270,19 +269,18 @@ namespace LMSGrupp3.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UploadTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsCompleted = table.Column<bool>(type: "bit", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: true),
                     ModuleId = table.Column<int>(type: "int", nullable: true),
                     ActivityId = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ActivityModelId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Document", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Document_ActivityModel_ActivityId",
-                        column: x => x.ActivityId,
+                        name: "FK_Document_ActivityModel_ActivityModelId",
+                        column: x => x.ActivityModelId,
                         principalTable: "ActivityModel",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -359,9 +357,9 @@ namespace LMSGrupp3.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Document_ActivityId",
+                name: "IX_Document_ActivityModelId",
                 table: "Document",
-                column: "ActivityId");
+                column: "ActivityModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Document_CourseId",
