@@ -67,18 +67,32 @@ namespace LMSGrupp3.Controllers
         }
 
             [HttpPost]
-        public async Task<IActionResult> UploadFile(IFormFile file, DocumentFileViewModel dvm)
+        public async Task<IActionResult> UploadFile(List<IFormFile> files, DocumentFileViewModel dvm)
         {
-            if (file == null || file.Length == 0)
+            if (files == null)
             {
                 return Content("file not selected");
             }
 
-            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "files");
-            var filePath = Path.Combine(uploads, file.FileName);
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            var uploads = this._hostingEnvironment.WebRootPath;
+            var filePath = this._hostingEnvironment.ContentRootPath;
+
+            string path = Path.Combine(this._hostingEnvironment.WebRootPath, "files");
+            if(!Directory.Exists(filePath))
             {
-                await file.CopyToAsync(stream);
+                Directory.CreateDirectory(filePath);
+            }
+
+            List<string> uploadedFiles = new List<string>();
+            foreach(IFormFile file in files)
+            {
+                string fileName = Path.GetFileName(file.FileName);
+                using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                    uploadedFiles.Add(fileName);
+                    ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
+                }
             }
 
             if (ModelState.IsValid)
@@ -93,10 +107,23 @@ namespace LMSGrupp3.Controllers
                 doc.CourseId = dvm.CourseId;
                 doc.ModuleId = dvm.ModuleId;
                 doc.ActivityId = dvm.ActivityId;
+                doc.Path = path;
                 _context.Add(doc);
+                
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        public ActionResult DownloadFile(int? id)
+        {
+            //Validate
+            Document doc = _context.Document.Find(id);
+            //Validate
+            string path = "wwwroot/files/";
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path + doc.FileName);
+            string fileName = doc.FileName;
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
     }
 }

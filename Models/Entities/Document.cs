@@ -40,5 +40,6 @@ namespace LMSGrupp3.Models.Entities
 
         [Display(Name = "Activity")]
         public int? ActivityId { get; set; }
+        public string Path { get;  set; }
     }
 }

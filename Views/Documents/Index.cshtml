@@ -60,6 +60,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ActivityId)
             </td>
+            <td>
+              @*  <a href="@item.Path">Download</a>*@
+               @* @Html.ActionLink("Click here to download", "DownloadFile", new { })*@
+               <a asp-action="DownloadFile" asp-route-id="@item.Id">Download</a>
+            </td>
         </tr>
 }
     </tbody>
