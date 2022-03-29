@@ -132,9 +132,12 @@ namespace LMSGrupp3
                     }
 
                     // Seed UserCourse
+                    context.UserCourse.ToList().ForEach(userCourse => context.Remove(userCourse));
+                    context.SaveChanges();
+
                     if (context.UserCourse.Count() == 0)
                     {
-                        var courseIds = context.Course.Where(c => c.Name == ".NET").Select(a => a.Id).ToArray();
+                        var courseIds = context.Course.Select(a => a.Id).ToArray();
                         var userIds = context.Users.Select(a => a.Id).ToArray();
 
                         var userCourses = new List<UserCourse>();
@@ -152,9 +155,11 @@ namespace LMSGrupp3
                     }
 
                     // Seed Module .NET Påbyggnadsutbildning
+                    context.Module.ToList().ForEach(module => context.Remove(module));
+                    context.SaveChanges();
                     if (context.Module.Count() == 0)
                     {
-                        var courseIds = context.Course.Where(c => c.Name == ".NET").Select(a => a.Id).ToArray();
+                        var courseIds = context.Course.Select(a => a.Id).ToArray();
                         var modules = new List<Module>();
                         modules.Add(new Module { Name = "C#", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "C# 7 (Polymorphism, Generics, Linq)", StartTime = DateTime.Parse("2021-11-26"), EndTime = DateTime.Parse("2021-12-14") });
                         modules.Add(new Module { Name = "Testing", CourseId = courseIds[indexPicker.Next(0, courseIds.Length - 1)], Description = "Unit Testing etc.", StartTime = DateTime.Parse("2021-12-17"), EndTime = DateTime.Parse("2022-01-02") });

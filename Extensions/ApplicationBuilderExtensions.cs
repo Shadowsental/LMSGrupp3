@@ -21,9 +21,9 @@ namespace LMSGrupp3.Extensions
                 }
                 catch (Exception ex)
                 {
-                    throw;
                     var logger = serviceProvider.GetService<ILogger<Program>>();
                     logger.LogError(string.Join("", ex.Message));
+                    throw;
                 }
             }
 
