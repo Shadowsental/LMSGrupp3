@@ -39,5 +39,7 @@ namespace LMSGrupp3.Models.Entities
 
 		public ICollection<Document> Documents { get; set; }
 
+		public Module Module { get; set; }
+
 	}
 }

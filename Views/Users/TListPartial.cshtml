@@ -1,0 +1,60 @@
+﻿@model IEnumerable<LMSGrupp3.Models.ViewModels.UserListViewModel>
+@inject UserManager<User> UserManager
+
+<thead>
+    <tr>
+        <th>
+            <a asp-action="TUserIndex" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Name)</a>
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Email)*@
+            <a asp-action="TUserIndex" asp-route-sortOrder="@ViewData["EmailSortParm"]">@Html.DisplayNameFor(model => model.Email)</a>
+        </th>
+        <th></th>
+    </tr>
+</thead>
+
+
+<tbody>
+    @foreach (var item in Model)
+    {
+        @if (item.IsTeacher)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Edit" asp-controller="Users" asp-route-id="@item.UserId">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                @if (User.IsInRole("Teacher"))
+                {
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.AppUserId">Edit</a> |
+        <a asp-action="Details" asp-route-id="@item.AppUserId">Details</a> |*@
+                <a asp-action="Edit" asp-route-id="@item.UserId">
+                    <img id="editicon" src="/icons/edit.svg" alt="Edit" />
+                </a> &nbsp;
+                <a asp-action="Details" asp-route-id="@item.UserId">
+                    <img id="detailsicon" src="/icons/info.svg" alt="Details" />
+                </a> &nbsp;
+
+                @if (UserManager.GetUserId(User).Equals(item.UserId))
+                {
+                    @*<a>Delete</a>*@
+                    @*<img id="deleteicon" src="/icons/delete.svg" alt="Delete" />*@
+            <p></p>
+                }
+                else
+                {
+                    @*<a asp-action="Delete" asp-route-id="@item.AppUserId">Delete</a>*@
+                    <a asp-action="Delete" asp-route-id="@item.UserId">
+                        <img id="deleteicon" src="/icons/delete.svg" alt="Delete" />
+                    </a>
+                }
+            </td>
+                }
+            </tr>
+        }
+    }
+</tbody>

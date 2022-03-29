@@ -13,5 +13,9 @@ namespace LMSGrupp3.Models.Entities
 
 		public ICollection<UserCourse> Courses { get; set; }
 		public ICollection<Document> Documents { get; set; }
+
+		public int? CourseId { get; set; }
+
+		public Course Course { get; set; }
 	}
 }

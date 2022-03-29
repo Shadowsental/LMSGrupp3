@@ -8,15 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Extensions\**" />
-    <Content Remove="Extensions\**" />
-    <EmbeddedResource Remove="Extensions\**" />
-    <None Remove="Extensions\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Areas\Identity\Pages\Account\Register.cshtml.cs" />
     <Compile Remove="Controllers\StudentController.cs" />
+    <Compile Remove="Extensions\ApplicationBuilderExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>

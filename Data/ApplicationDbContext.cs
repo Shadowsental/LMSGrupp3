@@ -23,17 +23,17 @@ namespace LMSGrupp3.Data
                 .IsUnique();
         }
 
-        public DbSet<Course> Course { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
-        public DbSet<UserCourse> UserCourse { get; set; }
+        public DbSet<UserCourse> UserCourses { get; set; }
 
-        public DbSet<Module> Module { get; set; }
+        public DbSet<Module> Modules { get; set; }
 
-        public DbSet<ActivityModel> ActivityModel { get; set; }
+        public DbSet<ActivityModel> ActivityModels { get; set; }
 
-        public DbSet<ActivityType> ActivityType { get; set; }
+        public DbSet<ActivityType> ActivityTypes { get; set; }
 
-        public DbSet<Document> Document { get; set; }
+        public DbSet<Document> Documents { get; set; }
 
     }
 }

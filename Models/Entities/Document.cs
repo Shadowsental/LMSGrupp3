@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -28,17 +29,21 @@ namespace LMSGrupp3.Models.Entities
         [Display(Name = "Timestamp")]
         public DateTime Timestamp { get; set; }
 
-        [Required]
-        [Display(Name = "User")]
+        public string FilePath { get; set; }
+        public bool? IsFinished { get; set; }
+
+        // Foreign Keys
         public string UserId { get; set; }
-
-        [Display(Name = "Course")]
         public int? CourseId { get; set; }
-
-        [Display(Name = "Module")]
         public int? ModuleId { get; set; }
+        public int? ActivityModelId { get; set; }
 
-        [Display(Name = "Activity")]
-        public int? ActivityId { get; set; }
+        // Navigation Properties
+        [DisplayName("Uploader")]
+        public User AppUser { get; set; }
+        public Course Course { get; set; }
+        public Module Module { get; set; }
+        public ActivityModel ActivityModel { get; set; }
+
     }
 }

@@ -1,0 +1,36 @@
+﻿@model TViewModel
+
+@{
+    ViewData["Title"] = "Teacher";
+}
+
+<!--Current-->
+<div class="container cont-section" id="current">
+    <div class="row row-activities">
+        <div class="col-sm-12">
+            <partial name="TCurrentPartial" model="@Model.Current" />
+        </div>
+    </div>
+</div>
+
+<!--Modules and Activities-->
+@if (Model.ModuleList != null)
+{
+    <partial name="TModuleAndActivityPartial" model="@Model" />
+}
+else
+{
+    <h2 style="margin: 5px 25px 20px 0px">Modules<a asp-controller="Modules" asp-action="Create" asp-route-id="@Model.Current.Course.Id"><img style="margin: 0px 0px 5px 5px" id="btn-create" src="/icons/create.svg" alt="Alternate Text" /></a></h2>
+}
+
+<!--Assignments-->
+<div class="container cont-section" id="assignments">
+    <div class="row row-assignments">
+        <div class="col-sm-12">
+            @if (Model.ModuleList != null && Model.AssignmentList != null)
+            {
+                <partial name="TAssignmentPartial" model="@Model.AssignmentList" />
+            }
+        </div>
+    </div>
+</div>

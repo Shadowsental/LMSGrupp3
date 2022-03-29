@@ -21,20 +21,15 @@ namespace LMSGrupp3.Controllers
     public class DocumentsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IWebHostEnvironment web;
-        private readonly UserManager<User> userManager;
+        private readonly IWebHostEnvironment _web;
+        private readonly UserManager<User> _userManager;
 
-        public DocumentsController(ApplicationDbContext _context, UserManager<User> userManager, IWebHostEnvironment web)
+        public DocumentsController(ApplicationDbContext context, UserManager<User> userManager, IWebHostEnvironment web)
         {
-            this._context = _context;
-            this.userManager = userManager;
-            this.web = web;
+            _context = context;
+            _userManager = userManager;
+            _web = web;
         }
 
-        // GET: Documents
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Document.ToListAsync());
-        }
     }
 }

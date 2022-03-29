@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TAssignmentListViewModel>
+
+<h2>All Course Assignments</h2>
+
+<div id="ass-row-headers" class="row">
+    <div class="col-sm-3">
+        @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="col-sm-3">
+        @Html.DisplayNameFor(model => model.StartDate)
+    </div>
+    <div class="col-sm-3">
+        @Html.DisplayNameFor(model => model.StopDate
+    </div>
+    <div class="col-sm-1">
+        @Html.DisplayNameFor(model => model.Finished)
+    </div>
+    <div class="col-sm-2">
+        @*Nada*@
+    </div>
+</div>
+
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-sm-3">
+            <a asp-controller="Activities" asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
+        </div>
+        <div class="col-sm-3">
+            @Html.DisplayFor(modelItem => item.StarDate)
+        </div>
+        <div class="col-sm-3">
+            @Html.DisplayFor(modelItem => item.StopDate)
+        </div>
+        <div class="col-sm-1">
+            @Html.DisplayFor(modelItem => item.Finished) %
+        </div>
+        <div class="col-sm-2 ass-col-icons">
+            @*<a asp-controller="Activities" asp-action="Edit" asp-route-id="@item.Id"><img src="~/icons/edit.svg" /></a>*@
+            @*<a asp-controller="Activities" asp-action="Details" asp-route-id="@item.Id"><img src="~/icons/info.svg"/></a>*@
+            @*<a asp-controller="Activities" asp-action="Delete" asp-route-id="@item.Id"><img src="~/icons/delete.svg" /></a>*@
+        </div>
+    </div>
+}

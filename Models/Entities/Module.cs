@@ -33,11 +33,13 @@ namespace LMSGrupp3.Models.Entities
         public DateTime EndTime { get; set; }
 
         [Display(Name = "Activity")]
-        public ICollection<ActivityModel> ModuleActivities { get; set; }
+        public ICollection<ActivityModel> ActivityModels { get; set; }
 
         public ICollection<Document> Documents { get; set; }
         // Navigational reference 
         [ForeignKey("CourseId")]
-        public int? CourseId { get; set; }
+        public int CourseId { get; set; }
+
+        public Course Course { get; set; }
     }
 }
