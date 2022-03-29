@@ -68,7 +68,7 @@ namespace LMSGrupp3.Controllers
             return model;
         }
 
-        private async Task<Course> GetUserCourseAsync(string userId)
+        private async Task<Course?> GetUserCourseAsync(string userId)
         {
             return await context.Users.Include(a => a.Course)
                 .Where(a => a.Id == userId)
@@ -81,6 +81,9 @@ namespace LMSGrupp3.Controllers
             var userId = userManager.GetUserId(User);
             var userCourse = await GetUserCourseAsync(userId);
             var timeNow = DateTime.Now;
+//2022-03-29
+            if (userCourse == null)
+                return new List<ModuleListViewModel>();
 
             var modules = await context.Modules.Include(a => a.Course)
                 .Where(a => a.Course.Id == userCourse.Id)
@@ -801,7 +804,7 @@ namespace LMSGrupp3.Controllers
 
         public async Task<List<TAssignmentListViewModel>> AssignmentListTeacher(int? id)
         {
-            var students = context.Courses.Find(id).AppUsers.Count();
+            var students = context.Courses.Find(id).Users.Count();
 
             if (students == 0) return null;
 
@@ -821,11 +824,11 @@ namespace LMSGrupp3.Controllers
             return assignments;
         }
 
-        public async Task<List<TeacherModuleViewModel>> ModuleListTeacher(int? id)
+        public async Task<List<TModuleViewModel>> ModuleListTeacher(int? id)
         {
             var modules = await db.Modules.Where(m => m.CourseId == id)
                 .OrderBy(a => a.StartTime)
-                .Select(a => new TeacherModuleViewModel
+                .Select(a => new TModuleViewModel
                 {
                     Id = a.Id,
                     Name = a.Name,
@@ -853,7 +856,7 @@ namespace LMSGrupp3.Controllers
             // newUser.CourseId is null if nothing selected in course dropdown list
             if (newUser.CourseId != null && !newUser.IsTeacher)
             {
-                course = await db.Courses.FirstOrDefaultAsync(c => c.Id == newUser.CourseId);
+                course = await context.Courses.FirstOrDefaultAsync(c => c.Id == newUser.CourseId);
             }
 
             return course;
@@ -882,7 +885,7 @@ namespace LMSGrupp3.Controllers
             return modules;
         }
 
-        private List<TeacherModuleViewModel> SetCurrentTeacherModule(List<TeacherModuleViewModel> modules, int currentId)
+        private List<TModuleViewModel> SetCurrentTeacherModule(List<TModuleViewModel> modules, int currentId)
         {
             foreach (var module in modules)
             {
