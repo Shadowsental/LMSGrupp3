@@ -2,11 +2,11 @@
 @model LMSGrupp3.Models.Entities.Module
 
 @{
-    ViewData["Title"] = "Skapa Modul i kurs: "+@TempData.Peek("LastCourseName");
+    ViewData["Title"] = "Create Module in Course: "+@TempData.Peek("LastCourseName");
 }
 <br />
-<h1>Skapa modul i kurs: @TempData.Peek("LastCourseName")</h1>
-<p>Kursen börjar: @ViewData["courseTimeStart"]</p>
+<h1>Create Module in Course: @TempData.Peek("LastCourseName")</h1>
+<p>Course Starts: @ViewData["courseTimeStart"]</p>
 <hr />
 <div class="row">
     <div class="col-md-4">

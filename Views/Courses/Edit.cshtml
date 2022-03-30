@@ -36,8 +36,46 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Courses" asp-action="Index">Back to List</a>
 </div>
+
+<div class="modal fade" id="EditCourseResult" tabindex="-1" role="dialog" aria-labelledby="aModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+               
+            </div>
+            <div class="modal-body">
+                @ViewBag.Result
+            </div>
+            <div class="modal-footer">
+                <a asp-controller="Courses" asp-action="Index">To Course List</a>
+                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    if (ViewBag.Result != null)
+    {
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#EditCourseResult").modal('show');
+            });
+        </script>
+    }
+}
+
+
+
+ <div>
+        <a class="btn btn-sm btn-info" asp-controller="Courses" asp-action="Details" asp-route-id="@TempData.Peek("LastCourseId")"><i class="fas fa-undo-alt"></i> Back to Course @TempData.Peek("LastCourseName")</a>
+    </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

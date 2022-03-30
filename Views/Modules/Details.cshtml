@@ -1,7 +1,7 @@
 ﻿@model LMSGrupp3.Models.Entities.Module
 
 @{
-    ViewData["Title"] = "Moduldetaljer";
+    ViewData["Title"] = "Module Info";
     TempData["LastModuleName"] = Model.Name;
     TempData["LastModuleId"] = Model.Id;
     TempData["LastModuleStartDate"] = Model.StartTime.ToString();
@@ -52,19 +52,19 @@
             <thead>
                 <tr>
                     <th>
-                        Aktivitetstyp
+                        Activity Type
                     </th>
                     <th>
                         Namn
                     </th>
                     <th>
-                        Startdatum
+                        Start Date
                     </th>
                     <th>
-                        Slutdatum
+                        End Date
                     </th>
                     <th>
-                        Beskrivning
+                        Description
                     </th>
                     @*<th></th>*@
                 </tr>
@@ -73,19 +73,19 @@
                 @foreach (var item in Model.ModuleActivities)
                 {
                     <tr onclick="window.location.href='../../ActivityModels/Details/@item.Id'">
-                        <td title="Klicka för att visa detaljer för aktivitet @item.Name.">
+                        <td title="Click to show details of activity @item.Name.">
                             @Html.DisplayFor(modelItem => item.ActivityType.Name)
                         </td>
-                        <td title="Klicka för att visa detaljer för aktivitet @item.Name.">
+                        <td title="Click to show details of activity @item.Name.">
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
-                        <td title="Klicka för att visa detaljer för aktivitet @item.Name.">
+                        <td title="Click to show details of activity @item.Name.">
                             @Html.DisplayFor(modelItem => item.StartDate)
                         </td>
-                        <td title="Klicka för att visa detaljer för aktivitet @item.Name.">
+                        <td title="Click to show details of activity @item.Name.">
                             @Html.DisplayFor(modelItem => item.StopDate)
                         </td>
-                        <td title="Klicka för att visa detaljer för aktivitet @item.Name.">
+                        <td title="Click to show details of activity @item.Name.">
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
                         @*<td>
@@ -101,7 +101,7 @@
     else
     {
         <hr />
-        <h5><i>Modulen @Model.Name har f n inga aktiviteter!</i></h5>
+        <h5><i>Module @Model.Name currently has no activities!</i></h5>
     }
     <a class="btn btn-sm btn-primary" asp-controller="ActivityModels" asp-action="Create" asp-route-CourseId="@Model.Id"><i class="fas fa-plus"></i> Lägg till aktivitet</a>
 

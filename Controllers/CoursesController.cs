@@ -112,19 +112,20 @@ namespace LMSGrupp3.Controllers
                 ViewBag.Result = "Course created successfully!";
                 _context.Add(course);
                 await _context.SaveChangesAsync();
-                //return RedirectToAction("TeacherHome", "Users");
+               
             }
             return View();
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
+            
             var course = await _context.Course.FindAsync(id);
             if (course == null)
             {
@@ -136,8 +137,9 @@ namespace LMSGrupp3.Controllers
         // POST: Courses/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate")] Course course)
         {
             if (id != course.Id)
@@ -149,6 +151,7 @@ namespace LMSGrupp3.Controllers
             {
                 try
                 {
+                    ViewBag.Result = "Course edited successfully!";
                     _context.Update(course);
                     await _context.SaveChangesAsync();
                 }
@@ -165,6 +168,7 @@ namespace LMSGrupp3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            
             return View(course);
         }
 
@@ -183,7 +187,7 @@ namespace LMSGrupp3.Controllers
                 return NotFound();
             }
 
-            return View(course);
+            return View();
         }
 
         // POST: Courses/Delete/5
