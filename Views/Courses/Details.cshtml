@@ -1,36 +1,125 @@
 ﻿@model LMSGrupp3.Models.Entities.Course
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Course Details ";
+    TempData["LastCourseName"] = Model.Name;
+    TempData["LastCourseId"] = Model.Id;
+    TempData["LastCourseStartDate"] = Model.StartDate.ToString();
 }
 
-<h1>Details</h1>
-
+<h1>@Html.DisplayFor(model => model.Name)</h1>
 <div>
-    <h4>Course</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.StartDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.StartDate)
         </dd>
     </dl>
 </div>
+
+@{ if (TempData["newUser"] != null || TempData["newUserData"] != null)
+    {
+        <div class="alert alert-success">
+            @*<strong>@TempData["newUser"]</strong><br />*@
+            @{ if (@TempData["newUserData"] != null)
+                {
+                    @TempData["newUserData"]
+                }
+            }
+        </div>
+    }
+}
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@Model.Id"><i class="fas fa-pencil-alt"></i> Edit Course @Html.DisplayFor(model => model.Name)</a>
+    &nbsp;
+  @*  <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@Model.Id"><i class="far fa-trash-alt"></i> Radera kurs @Html.DisplayFor(model => model.Name)</a>
+    &nbsp;*@
+
+    <a class="btn btn-primary btn-sm" asp-area="Identity" asp-page="/Account/Create" asp-route-courseId="@Model.Id" asp-route-returnUrl="/Courses/Details">
+        <i class="fas fa-plus"></i> Add Student
+    </a>
+    <br />
+    <br />
+
+    @if (Model.Modules.Count > 0)
+    {
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>
+                        Module
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Start Date
+                    </th>
+                    <th>
+                        End Date
+                    </th>
+                    <th>
+                        Amount of&nbsp;Activities
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Modules)
+                {
+
+                    string activityTitle = "";
+                    foreach (var m in item.ModuleActivities)
+                    {
+                        activityTitle = activityTitle + "\n" + m.Name;
+                    }
+                    @if (activityTitle == "")
+                    {
+                        activityTitle = "No Activities in " + item.Name + "!";
+                    }
+                    else
+                    {
+                        activityTitle = "Activities in" + item.Name + ": " + activityTitle;
+                    }
+
+                    <tr onclick="window.location.href='../../Modules/Details/@item.Id'">
+                        <td title="Display and andd activities in module @item.Name.">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td title="Display and andd activities in module @item.Name.">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td title="Display and andd activities in module @item.Name.">
+                            @Html.DisplayFor(modelItem => item.StartTime)
+                        </td>
+                        <td title="Display and andd activities in module @item.Name.">
+                            @Html.DisplayFor(modelItem => item.EndTime)
+                        </td>
+                        <td title="@activityTitle" align="center">
+                            @Html.DisplayFor(modelItem => item.ModuleActivities.Count)
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <hr />
+        <h5><i>Couse @Model.Name currenty have no modules!</i></h5>
+    }
+    <a class="btn btn-sm btn-primary" asp-controller="Modules" asp-action="Create" asp-route-CourseId="@Model.Id"><i class="fas fa-plus"></i> Add Module</a>
+
+    <hr />
+
+    <a class="btn btn-sm btn-info" asp-controller="Courses" asp-action="Index"><i class="fas fa-undo-alt"></i> Back to Course List</a>
 </div>

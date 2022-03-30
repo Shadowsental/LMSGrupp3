@@ -1,7 +1,7 @@
 ﻿@model LMSGrupp3.Models.Entities.ActivityModel
 
 @{
-    ViewData["Title"] = "Aktivitetsdetaljer " + @Html.DisplayFor(model => model.Name);
+    ViewData["Title"] = "Activity Details " + @Html.DisplayFor(model => model.Name);
 }
 
 <h1>@TempData.Peek("LastCourseName") / @TempData.Peek("LastModuleName") / @Html.DisplayFor(model => model.Name)</h1>
