@@ -30,7 +30,7 @@
             </div>
         </div>*@
 
-        <h4 class="row text-white stuModules">Moduler</h4>
+        <h4 class="row stuModules">Modules</h4>
 
         <div style="padding-bottom:30px;">
             @foreach (var item in Model.Modules)
@@ -45,7 +45,7 @@
 
                     }
                     @*<div class="col-md-9 col-sm-8">*@
-                    <div class="card">
+                    <div class="card" style="margin:5px;">
                     <div class="card-block">
                     @*<a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a>*@
                     <h4><a asp-controller="ActivityModels" asp-action="Index" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"
@@ -61,10 +61,13 @@
 
                     @*<div class="col-md-3 col-sm-4 col- text-right stuModuleDate">*@
                     <a href="#activities-@item.Id" class="col-md-3 col-sm-4 text-right stuModuleDate" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample" style="">
-                        @moduleStart - @moduleEnd
+                        <br> Börjar: @moduleStart
+                        <br> Slutar: @moduleEnd
                     </a>
                     </div>
-                    <a asp-controller="Documents" asp-action="Create">Upload Document</a>
+                        <button>
+                            <a asp-controller="Documents" asp-action="Create">Upload Document</a>
+                        </button>
                     </div>
 
                     <div id="Docs-@item.Id" class="col-sm-12" style="margin-top:5px; display:none;">
