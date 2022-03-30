@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ActivityListViewModel>
+﻿@using LMSGrupp3.Models.ViewModels.Student
+@model IEnumerable<ActivityListViewModel>
 
 <h2>Activities</h2>
 
@@ -7,10 +8,10 @@
         @Html.DisplayNameFor(model => model.Name)
     </div>
     <div class="col-sm-3">
-        @Html.DisplayNameFor(model => model.StartDate)
+        @Html.DisplayNameFor(model => model.StartTime)
     </div>
     <div class="col-sm-3">
-        @Html.DisplayNameFor(model => model.StopDate)
+        @Html.DisplayNameFor(model => model.EndTime)
     </div>
     <div class="col-sm-3">
         @Html.DisplayNameFor(model => model.ActivityType)

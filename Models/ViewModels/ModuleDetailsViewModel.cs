@@ -10,7 +10,7 @@ namespace LMSGrupp3.Models.ViewModels
         public Module Module { get; set; }
         public List<Entities.Document> Documents { get; set; }
         public Entities.ActivityModel ActivityModel { get; set; }
-        public AppUser AppUser { get; set; }
+        public User AppUser { get; set; }
     }
 }
 

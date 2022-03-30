@@ -340,20 +340,19 @@ namespace LMSGrupp3.Controllers
                 if (createResult.Succeeded)
                 {
                     var createdUser = await userManager.FindByNameAsync(newUser.Email);
-
-                    // Add role(s)
+                                        // Add role(s)
                     // Before adding role, verify that roles haven't have been applied yet.
                     // All users have role Student
                     if (!await userManager.IsInRoleAsync(createdUser, "Student"))
                     {
-                        await AddUserToRoleAsync(createdUser, "Student");
+                        await identityManager.AddUserToRoleAsync(createdUser, "Student");
 
                         // Add Teacher role if applicable
                         if (newUser.IsTeacher)
                         {
                             if (!await userManager.IsInRoleAsync(createdUser, "Teacher"))
                             {
-                                await AddUserToRoleAsync(createdUser, "Teacher");
+                                await userManager.AddUserToRoleAsync(createdUser, "Teacher");
                             }
                         }
                     }
@@ -432,7 +431,7 @@ namespace LMSGrupp3.Controllers
             {
                 try
                 {
-                    var appUser = await context.Users.FindAsync(id);
+                    var User = await context.Users.FindAsync(id);
 
                     if (editUser.CurrentPassword != null && editUser.Password != null)
                     {
@@ -450,7 +449,7 @@ namespace LMSGrupp3.Controllers
                     if (ModelState.IsValid)
                     {
                         User.CourseId = editUser.CourseId;
-                        User.LastName = editUser.Name;
+                        User.Name = editUser.Name;
                         context.Update(User);
                         await context.SaveChangesAsync();
                     }
@@ -485,12 +484,12 @@ namespace LMSGrupp3.Controllers
                 return NotFound();
             }
 
-            var appUser = await context.Users
+            var User = await context.Users
                .Include(u => u.Course)
                .Include(u => u.Documents)
                .FirstOrDefaultAsync(u => u.Id == id);
 
-            if (appUser == null)
+            if (User == null)
             {
                 return NotFound();
             }
@@ -503,13 +502,13 @@ namespace LMSGrupp3.Controllers
         [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var appUser = await context.Users
+            var User = await context.Users
                 .Include(u => u.Course)
                 .Include(u => u.Documents)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
-            db.Users.Remove(User);
-            await db.SaveChangesAsync();
+            context.Users.Remove(User);
+            await context.SaveChangesAsync();
             return RedirectToAction(nameof(TUserIndex));
         }
 
@@ -575,16 +574,16 @@ namespace LMSGrupp3.Controllers
             var timeNow = DateTime.Now;
 
             var module = user.Course.Modules.OrderBy(t => Math.Abs((t.StartTime - timeNow).Ticks)).First();
-            var activity = module.ActivityModels.OrderBy(t => Math.Abs((t.StartTime - timeNow).Ticks)).First();
+            var activity = module.ActivityModels.OrderBy(t => Math.Abs((t.StartDate - timeNow).Ticks)).First();
             var documents = await context.Documents.Where(a => a.UserId == userId).Select(a => a.ActivityModelId).ToListAsync();
 
-            var assignments = module.Activities.Where(a => a.ActivityType.Id == 3)
-                .OrderBy(t => Math.Abs((t.EndTime - timeNow).Ticks)).Take(3)
+            var assignments = module.ActivityModels.Where(a => a.ActivityType.Id == 3)
+                .OrderBy(t => Math.Abs((t.StopDate - timeNow).Ticks)).Take(3)
                 .Select(a => new CurrentAssignmentsViewModel
                 {
                     Id = a.Id,
                     Name = a.Name,
-                    DueTime = a.EndTime,
+                    DueTime = a.StopDate,
                     IsFinished = documents.Contains(a.Id)
                 })
                 .ToList();
@@ -616,7 +615,7 @@ namespace LMSGrupp3.Controllers
             //    .ToListAsync();
 
 
-            var userList = (from q in db.Users
+            var userList = (from q in context.Users
                             select q).Include("Course");
 
             switch (sortOrder)
@@ -648,7 +647,7 @@ namespace LMSGrupp3.Controllers
             var model = new List<UserListViewModel>();
 
             //foreach (var appUser in userList)
-            foreach (var appUser in userList2)
+            foreach (var User in userList2)
             {
                 model.Add(new UserListViewModel
                 {
@@ -735,7 +734,7 @@ namespace LMSGrupp3.Controllers
                     courses = courses.OrderBy(s => s.StartDate);
                     break;
                 case "date_desc":
-                    courses = courses.OrderByDescending(s => s.EndTime);
+                    courses = courses.OrderByDescending(s => s.StartDate);
                     break;
                 default:
                     courses = courses.OrderBy(s => s.Name);
@@ -766,7 +765,7 @@ namespace LMSGrupp3.Controllers
 
             //This happens for newly created courses without any modules
             if (course.Modules.Count == 0)
-                return new TCurrentViewModel { Course = course, Module = null, Activity = null, Assignments = null, Finished = null };
+                return new TCurrentViewModel { Course = course, Module = null, ActivityModel = null, Assignments = null, Finished = null };
 
             var timeNow = DateTime.Now;
             var module = course.Modules.OrderBy(t => Math.Abs((t.StartTime - timeNow).Ticks)).First();
@@ -774,7 +773,7 @@ namespace LMSGrupp3.Controllers
             // If no users assigned to course yet or there are no activities in the module
             if (students == 0 || module.ActivityModels.Count == 0)
             {
-                return new TCurrentViewModel { Course = course, Module = module, Activity = null, Assignments = null, Finished = null };
+                return new TCurrentViewModel { Course = course, Module = module, ActivityModel = null, Assignments = null, Finished = null };
             }
             var activity = module.ActivityModels.OrderBy(t => Math.Abs((t.StartDate - timeNow).Ticks)).First();
 
@@ -795,7 +794,7 @@ namespace LMSGrupp3.Controllers
             {
                 Course = course,
                 Module = module,
-                Activity = activity,
+                ActivityModel = activity,
                 Assignments = assignments,
             };
 
@@ -808,14 +807,14 @@ namespace LMSGrupp3.Controllers
 
             if (students == 0) return null;
 
-            var assignments = await db.Activities
+            var assignments = await context.ActivityModels
                 .Where(a => a.ActivityType.Name == "Assignment" && a.Module.CourseId == id)
                 .Select(a => new TAssignmentListViewModel
                 {
                     Id = a.Id,
                     Name = a.Name,
-                    StartTime = a.StartTime,
-                    EndTime = a.EndTime,
+                    StartTime = a.StartDate,
+                    EndTime = a.StopDate,
                     Finished = a.Documents.Where(d => d.IsFinished.Equals(true)).Count() * 100 / students
                 })
                 .OrderBy(v => v.StartTime)
@@ -826,7 +825,7 @@ namespace LMSGrupp3.Controllers
 
         public async Task<List<TModuleViewModel>> ModuleListTeacher(int? id)
         {
-            var modules = await db.Modules.Where(m => m.CourseId == id)
+            var modules = await context.Modules.Where(m => m.CourseId == id)
                 .OrderBy(a => a.StartTime)
                 .Select(a => new TModuleViewModel
                 {
@@ -842,12 +841,12 @@ namespace LMSGrupp3.Controllers
 
         private bool AppUserExists(string id)
         {
-            return db.Users.Any(e => e.Id == id);
+            return context.Users.Any(e => e.Id == id);
         }
 
         private bool AppUserEmailExists(string email)
         {
-            return db.Users.Any(e => e.Email == email);
+            return context.Users.Any(e => e.Email == email);
         }
         private async Task<Course> CreateCourseSelectList(CreateUserViewModel newUser)
         {

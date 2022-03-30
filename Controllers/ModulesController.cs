@@ -1,27 +1,35 @@
-﻿using LMSGrupp3.Data;
-using LMSGrupp3.Models.Entities;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using LMSGrupp3.Data;
+using LMSGrupp3.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using LMSGrupp3.Models.ViewModels.Student;
+using LMSGrupp3.Models.ViewModels;
+using LMSGrupp3.Extensions;
+using LMSGrupp3.Models.ViewModels.Teacher;
+using System.Data.Common;
 
 namespace LMSGrupp3.Controllers
 {
     public class ModulesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
         public ModulesController(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         // GET: Modules
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Module.ToListAsync());
+            return View(await context.Modules.ToListAsync());
         }
 
         // GET: Modules/Details/5
@@ -32,17 +40,51 @@ namespace LMSGrupp3.Controllers
                 return NotFound();
             }
 
-            var @module = await _context.Module
-                .Include(ma => ma.ModuleActivities)
-                .ThenInclude(ac => ac.ActivityType)
-                .FirstOrDefaultAsync(m => m.Id == id)
-                ;
-            if (@module == null)
+            var module = await context.Modules
+                .Include(c => c.Course)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (module == null)
             {
                 return NotFound();
             }
-            return View(@module);
+
+            // All activities in the module.
+            var activities = await context.ModuleActivites.Where(a => a.ModuleId == module.Id).ToListAsync();
+
+            // All activity Ids in the module.
+            var activityIds = await context.Activities.Where(a => a.ModuleId == module.Id).Select(i => i.Id).ToListAsync();
+
+            // All documents in the module.
+            var documents = await context.Documents.Where(d => d.ModuleId == module.Id)
+                .Include(a => a.Activity)
+                .Include(u => u.AppUser)
+                .ToListAsync();
+
+            // All documents in the activities in the module.
+            foreach (var doc in await context.Documents.Include(a => a.Activity).ToListAsync())
+            {
+                foreach (var i in activityIds)
+                {
+                    if (doc.ActivityId == i)
+                    {
+                        if (!documents.Contains(doc))
+                        {
+                            documents.Add(doc);
+                        }
+
+                    }
+                }
+            }
+
+            var viewmodel = new ModuleDetailsViewModel
+            {
+                Module = module,
+                Documents = documents
+            };
+
+            return View(viewmodel);
         }
+
 
         // GET: Modules/Create
         [HttpGet]
@@ -60,11 +102,10 @@ namespace LMSGrupp3.Controllers
 
             if (module.CourseId > 0)
             {
-                var course = _context.Course.Where(c => c.Id == module.CourseId).SingleOrDefault();
+                var course = context.Course.Where(c => c.Id == module.CourseId).SingleOrDefault();
                 if (course != null)
                 {
-                    CultureInfo culture = CultureInfo.CreateSpecificCulture("sv-SE");  // en-US
-                    CultureInfo ci = CultureInfo.InvariantCulture;
+                   
 
                     ViewData["courseTimeStart"] = course.StartDate.ToString("dd/MM-yy", ci);
                     ViewData["startTime"] = course.StartDate.ToString("yyyy-dd-MM");
@@ -86,7 +127,7 @@ namespace LMSGrupp3.Controllers
             ViewData["errorTimeStart"] = "";
             ViewData["errorTimeEnd"] = "";
 
-            var course = _context.Course.Where(m => m.Id == module.CourseId).SingleOrDefault();
+            var course = context.Course.Where(m => m.Id == module.CourseId).SingleOrDefault();
 
             if (ModelState.IsValid)
             {
@@ -106,8 +147,8 @@ namespace LMSGrupp3.Controllers
 
                     if (timeError == false)
                     {
-                        _context.Add(@module);
-                        await _context.SaveChangesAsync();
+                        context.Add(@module);
+                        await context.SaveChangesAsync();
                         var url = "~/Courses/Details/" + @module.CourseId;
                         return LocalRedirect(url);
                     }
@@ -116,7 +157,7 @@ namespace LMSGrupp3.Controllers
 
             // Skapa data vid fel
             // CultureInfo culture = CultureInfo.CreateSpecificCulture("sv-SE");  // en-US
-            CultureInfo ci = CultureInfo.InvariantCulture;
+            
 
             ViewData["courseTimeStart"] = course.StartDate.ToString("dd/MM-yy", ci);
             ViewData["startTime"] = course.StartDate.ToString("yyyy-dd-MM");
@@ -132,7 +173,7 @@ namespace LMSGrupp3.Controllers
                 return NotFound();
             }
 
-            var @module = await _context.Module.FindAsync(id);
+            var @module = await context.Module.FindAsync(id);
             if (@module == null)
             {
                 return NotFound();
@@ -156,8 +197,8 @@ namespace LMSGrupp3.Controllers
             {
                 try
                 {
-                    _context.Update(@module);
-                    await _context.SaveChangesAsync();
+                    context.Update(@module);
+                    await context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -185,7 +226,7 @@ namespace LMSGrupp3.Controllers
                 return NotFound();
             }
 
-            var @module = await _context.Module
+            var @module = await context.Module
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@module == null)
             {
@@ -200,9 +241,9 @@ namespace LMSGrupp3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var @module = await _context.Module.FindAsync(id);
-            _context.Module.Remove(@module);
-            await _context.SaveChangesAsync();
+            var @module = await context.Module.FindAsync(id);
+            context.Module.Remove(@module);
+            await context.SaveChangesAsync();
             //            return RedirectToAction(nameof(Index));
             var url = "~/Courses/Details/" + TempData.Peek("LastCourseId");
             return LocalRedirect(url);
@@ -210,7 +251,7 @@ namespace LMSGrupp3.Controllers
 
         private bool ModuleExists(int id)
         {
-            return _context.Module.Any(e => e.Id == id);
+            return context.Module.Any(e => e.Id == id);
         }
     }
 }

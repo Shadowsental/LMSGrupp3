@@ -1,16 +1,22 @@
-﻿using LMSGrupp3.Data;
-using LMSGrupp3.Models.Entities;
-using LMSGrupp3.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
+using LMSGrupp3.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using LMSGrupp3.Models.Entities;
+using AutoMapper;
+using LMSGrupp3.Services;
+using Microsoft.AspNetCore.Http;
+using LMSGrupp3.ViewModels;
 
 namespace LMSGrupp3
 {
@@ -26,28 +32,23 @@ namespace LMSGrupp3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-                
-                });
-
-          
-
                 services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<User>()
+            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddSingleton<IFormFile, LMSFormFile>();
 
+            services.AddScoped<ISelectService, SelectService>();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddControllersWithViews();
+            services.AddRazorPages();
 
-           
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

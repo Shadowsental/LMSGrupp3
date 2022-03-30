@@ -8,7 +8,7 @@ namespace LMSGrupp3.Models.ViewModels.Teacher
 {
     public class TCurrentViewModel
     {
-        public Entities.ActivityModel Activity { get; set; }
+        public Entities.ActivityModel ActivityModel { get; set; }
         public Course Course { get; set; }
         public ICollection<TAssignmentsViewModel> Assignments { get; set; }
         public Module Module { get; set; }

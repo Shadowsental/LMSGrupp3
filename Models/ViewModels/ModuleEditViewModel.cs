@@ -27,7 +27,7 @@ namespace LMSGrupp3.Models.ViewModels
 
 
 
-        public List<Entities.Activity> Activities { get; set; }
+        public List<Entities.ActivityModel> ActivityModels { get; set; }
 
 
         [DisplayName("Name")]

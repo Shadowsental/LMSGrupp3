@@ -9,8 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Identity\Pages\Account\Register.cshtml.cs" />
+    <Compile Remove="Controllers\ActivityModelsController.cs" />
+    <Compile Remove="Controllers\ActivityTypesController.cs" />
+    <Compile Remove="Controllers\CoursesController.cs" />
+    <Compile Remove="Controllers\ModulesController.cs" />
     <Compile Remove="Controllers\StudentController.cs" />
     <Compile Remove="Extensions\ApplicationBuilderExtensions.cs" />
+    <Compile Remove="Views\Users\TCurrentViewModel2.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +26,8 @@
 
   <ItemGroup>
     <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.0.1" />
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="bogus" Version="34.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.2" />
