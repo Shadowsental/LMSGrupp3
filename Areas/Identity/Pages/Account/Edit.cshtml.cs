@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using LMSGrupp3.Data;
 
-namespace LMSGrupp3.Areas.Identity.Pages
+namespace LMSGrupp3.Areas.Identity.Pages.Account
 {
 
     [Authorize(Roles = "Teacher")]
