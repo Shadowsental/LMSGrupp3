@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using LMSGrupp3.Models.Entities;
 
 namespace LMSGrupp3.Areas.Identity.Pages.Account.Manage
 {

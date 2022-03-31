@@ -17,7 +17,7 @@ namespace LMSGrupp3
             public string Name;
             public string Email;
             public string Password;
-            public string Role;
+            public string? Role;
         }
 
         public static class SeedData
