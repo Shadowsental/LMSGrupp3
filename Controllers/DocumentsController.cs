@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Web;
 using System;
 using System.IO;
 using System.Linq;
@@ -78,20 +79,19 @@ namespace LMSGrupp3.Controllers
             var filePath = this._hostingEnvironment.ContentRootPath;
 
             string path = Path.Combine(this._hostingEnvironment.WebRootPath, "files");
-            if(!Directory.Exists(filePath))
+            if (!Directory.Exists(filePath))
             {
                 Directory.CreateDirectory(filePath);
             }
 
             List<string> uploadedFiles = new List<string>();
-            foreach(IFormFile file in files)
+            foreach (IFormFile file in files)
             {
                 string fileName = Path.GetFileName(file.FileName);
                 using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
                 {
                     file.CopyTo(stream);
                     uploadedFiles.Add(fileName);
-                    ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
                 }
             }
 
@@ -117,11 +117,19 @@ namespace LMSGrupp3.Controllers
 
         public ActionResult DownloadFile(int? id)
         {
-            //Validate
             Document doc = _context.Document.Find(id);
-            //Validate
-            string path = "wwwroot/files/";
-            byte[] fileBytes = System.IO.File.ReadAllBytes(path + doc.FileName);
+            if(id == null)
+            {
+                return Content("File not found");
+            }
+
+            string path = doc.Path;
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path + "/" + doc.FileName);
+            if (fileBytes == null)
+            {
+                return Content("File doesn't exist");
+            }
+
             string fileName = doc.FileName;
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }

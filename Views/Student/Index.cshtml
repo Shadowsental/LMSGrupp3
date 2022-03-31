@@ -65,9 +65,7 @@
                         <br> Slutar: @moduleEnd
                     </a>
                     </div>
-                        <button>
-                            <a asp-controller="Documents" asp-action="Create">Upload Document</a>
-                        </button>
+                        <a asp-controller="Documents" asp-route-id="@item.Id" asp-action="Create">Upload Document</a>
                     </div>
 
                     <div id="Docs-@item.Id" class="col-sm-12" style="margin-top:5px; display:none;">
