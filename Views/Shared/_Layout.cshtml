@@ -57,7 +57,7 @@
                                 <a class="nav-link" asp-area="Identity" asp-page="/Account/Index" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">User </a>
                             </li>*@
                             
-                                 <li class="nav-item">
+                             /*    <li class="nav-item">
                                     <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a>
                                   </li> 
                                     <li class="nav-item">  
@@ -71,21 +71,12 @@
                                   </li> 
                                     <li class="nav-item"> 
                                     <a class="nav-link" asp-area="" asp-controller="Documents" asp-action="Index">Documents</a>
-                                    </li> 
+                                    </li> */
                                 <li class="nav-item">
                                     @*<a class="nav-link" asp-area="Identity" asp-page="/Account/Create" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Lägg till Användare</a>*@
-                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Index">User</a>
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Index" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">User</a>
                                 </li>
-                                  <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Lists</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-controller="Courses" asp-action="Index">Courses</a>
-                                    <a class="dropdown-item" asp-controller="Modules" asp-action="Index">Modules</a>
-                                    <a class="dropdown-item" asp-controller="Activities" asp-action="Index">Activities</a>
-                                    <a class="dropdown-item" asp-controller="ActivityTypes" asp-action="Index">Activity Types</a>
-                                    <a class="dropdown-item" asp-controller="Documents" asp-action="Index">Documents</a>
-                                </div>
-                            </li>
+                                  
                         }
                         else if (User.IsInRole("Student"))
                         {

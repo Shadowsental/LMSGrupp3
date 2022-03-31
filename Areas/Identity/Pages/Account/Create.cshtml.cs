@@ -17,7 +17,7 @@ using LMSGrupp3.Data;
 
 namespace LMSGrupp3.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "Teacher")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<User> _signInManager;
@@ -77,7 +77,7 @@ namespace LMSGrupp3.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "{0} must be specified")]
             [StringLength(20, MinimumLength = 1)]
             [Display(Name = "Role")]
-            public string Role { get; set; }
+            public string? Role { get; set; }
             public IEnumerable<SelectListItem> Roles { get; set; }
 
             [Display(Name = "Attach to Course")]
@@ -164,18 +164,18 @@ namespace LMSGrupp3.Areas.Identity.Pages.Account
                         {
                             string roll = "";
                             if (Input.Role == "Teacher")
-                                roll = "lärare";
+                                roll = "Teacher";
                             else
-                                roll = "elev";
+                                roll = "Student";
 
-                            TempData["newUser"] = "Skapade ny " + roll;
+                            TempData["newUser"] = "Created new " + roll;
                             TempData["newUserData"] = Input.Name + " (" + Input.Email + ")";
 
                             returnUrl = "/Identity/Account/Details?userEmail=" + Input.Email;
                         }
                         else
                         {
-                            TempData["newUserData"] = "Skapade ny elev på kursen: " + Input.Name + " (" + Input.Email + ")";
+                            TempData["newUserData"] = "Created new stident in course: " + Input.Name + " (" + Input.Email + ")";
 
                             returnUrl = returnUrl + "/" + Input.CourseId;  //  courseId=2&returnUrl=/Courses/Details
                         }
