@@ -51,13 +51,16 @@
                          @if (User.IsInRole("Teacher"))
                         {
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="TeacherHome">Courses</a>
+                            </li>
+                         @*   <li class="nav-item">
                                 <a class="nav-link" asp-area="Identity" asp-page="/Account/Create" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Add+User </a>
-                              </li> 
+                              </li> *@
                                @* <li class="nav-item">
                                 <a class="nav-link" asp-area="Identity" asp-page="/Account/Index" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">User </a>
                             </li>*@
                             
-                             /*    <li class="nav-item">
+                                 <li class="nav-item">
                                     <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a>
                                   </li> 
                                     <li class="nav-item">  
@@ -71,7 +74,7 @@
                                   </li> 
                                     <li class="nav-item"> 
                                     <a class="nav-link" asp-area="" asp-controller="Documents" asp-action="Index">Documents</a>
-                                    </li> */
+                                    </li> 
                                 <li class="nav-item">
                                     @*<a class="nav-link" asp-area="Identity" asp-page="/Account/Create" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Lägg till Användare</a>*@
                                     <a class="nav-link" asp-area="Identity" asp-page="/Account/Index">User</a>

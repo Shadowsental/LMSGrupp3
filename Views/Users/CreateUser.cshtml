@@ -1,0 +1,111 @@
+﻿@model LMSGrupp3.Models.ViewModels.Teacher.CreateUserViewModel
+@inject LMSGrupp3.Services.ISelectService courseSelect
+
+@{
+    ViewData["Title"] = "Add User";
+}
+
+<script type="text/javascript">
+    function buttonValue(e) {
+        var c = document.getElementById("course");
+        // If Teacher = true - hide Course
+        if (e.value === 'true') {
+            c.style.display = "none";
+        // If Teacher = false - show Course
+        } else if (e.value === 'false') {
+            c.style.display = "block";
+        }
+    }
+</script>
+
+<h1>Add User</h1>
+
+<div class="container cont-section">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="CreateUser">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-check-inline">
+                    <label asp-for="IsTeacher" class="form-check-label">
+                        <input asp-for="IsTeacher" type="radio" class="form-check-input" value="true" onclick="buttonValue(this)">Teacher
+                    </label>
+                    <span asp-validation-for="IsTeacher" class="text-danger"></span>
+                </div>
+                <div class="form-check-inline mb-3">
+                    <label asp-for="IsTeacher" class="form-check-label">
+                        <input asp-for="IsTeacher" type="radio" class="form-check-input" value="false" onclick="buttonValue(this)">Student
+                    </label>
+                    <span asp-validation-for="IsTeacher" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword" class="control-label"></label>
+                    <input asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group" id="course" style="display:none">
+                    <label asp-for="CourseId" class="control-label"></label>
+                    <select asp-for="CourseId" class="form-control" asp-items="@await courseSelect.SelectCourses()"></select>
+                    <span asp-validation-for="CourseId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create User" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="UserCreateResultModal" tabindex="-1" role="dialog" aria-labelledby="aModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="aModalLabel">@ViewBag.Email</h5>
+            </div>
+            <div class="modal-body">
+                @ViewBag.Result
+            </div>
+            <div class="modal-footer">
+             <a asp-action="TeacherUserIndex">To User Account List</a>
+                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    if (ViewBag.Result != null)
+    {
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#appUserCreateResultModal").modal('show');
+            });
+        </script>
+    }
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

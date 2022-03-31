@@ -133,7 +133,7 @@ namespace LMSGrupp3.Areas.Identity.Pages.Account
                             throw new Exception(string.Join("\n", svar.Errors));
                         }
 
-                        #region SendEmail
+                       // #region SendEmail
                         //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         //var callbackUrl = Url.Page(
                         //    "/Account/ConfirmEmail",
@@ -145,7 +145,7 @@ namespace LMSGrupp3.Areas.Identity.Pages.Account
                         //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                         // await _signInManager.SignInAsync(user, isPersistent: false);
-                        #endregion
+                      //  #endregion
 
                         if (Input.CourseId > 0)  // Koppla användare till kurs
                         {
@@ -175,7 +175,7 @@ namespace LMSGrupp3.Areas.Identity.Pages.Account
                         }
                         else
                         {
-                            TempData["newUserData"] = "Created new stident in course: " + Input.Name + " (" + Input.Email + ")";
+                            TempData["newUserData"] = "Created new student in course: " + Input.Name + " (" + Input.Email + ")";
 
                             returnUrl = returnUrl + "/" + Input.CourseId;  //  courseId=2&returnUrl=/Courses/Details
                         }

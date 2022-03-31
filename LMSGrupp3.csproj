@@ -9,13 +9,9 @@
 
   <ItemGroup>
     <Compile Remove="Extensions\**" />
-    <Compile Remove="Views\Users\**" />
     <Content Remove="Extensions\**" />
-    <Content Remove="Views\Users\**" />
     <EmbeddedResource Remove="Extensions\**" />
-    <EmbeddedResource Remove="Views\Users\**" />
     <None Remove="Extensions\**" />
-    <None Remove="Views\Users\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,6 +59,7 @@
 
   <ItemGroup>
     <None Include="Areas\Identity\Pages\Account\Index.cshtml" />
+    <None Include="Views\Users\Index.cshtml" />
   </ItemGroup>
 
 </Project>
