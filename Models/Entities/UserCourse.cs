@@ -8,7 +8,7 @@ namespace LMSGrupp3.Models.Entities
         //[Key]
         //public int Id { get; set; }
 
-    //    [ForeignKey("CourseId")]
+        //[ForeignKey("CourseId")]
         public int CourseId { get; set; }
 
         [ForeignKey("UserId")]

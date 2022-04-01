@@ -81,12 +81,12 @@ namespace LMSGrupp3.Controllers
 
         private bool UserExists(string id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Users.Any(e => e.Id == id);
         }
 
         private bool UserEmailExists(string email)
         {
-            return _context.User.Any(e => e.Email == email);
+            return _context.Users.Any(e => e.Email == email);
         }
         private async Task<Course> CreateCourseSelectList(CreateUserViewModel newUser)
         {
