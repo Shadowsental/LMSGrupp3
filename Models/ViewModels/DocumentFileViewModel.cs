@@ -19,7 +19,7 @@ namespace LMSGrupp3.Models.ViewModels
         public int? ModuleId { get; set; }
         public int? ActivityId { get; set; }
 
-        public LMSFormFile LMSFormFile { get; set; }
+        //public LMSFormFile LMSFormFile { get; set; }
 
     }
 }
